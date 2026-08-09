@@ -3,12 +3,237 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#16803c">
+
   <title>Bachat Pro</title>
+
+  <!-- Our design file -->
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <h1>💰 Bachat Pro</h1>
-  <p>Save Smart • Spend Wise</p>
+  <div class="app">
+
+    <!-- Header -->
+    <header class="header">
+      <h1>💰 Bachat Pro</h1>
+      <p>Save Smart • Spend Wise</p>
+    </header>
+
+
+    <main class="content">
+
+      <!-- Balance -->
+      <section class="balance-card">
+        <small>Total Bachat</small>
+
+        <div class="balance">
+          Rs. 17,500
+        </div>
+
+        <small>August 2026</small>
+      </section>
+
+
+      <!-- Summary Cards -->
+      <section class="cards">
+
+        <div class="card">
+          <h3>💰 Income</h3>
+          <div class="amount income">
+            Rs. 50,000
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>💸 Expenses</h3>
+          <div class="amount expense">
+            Rs. 32,500
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>🏦 Bachat</h3>
+          <div class="amount saving">
+            Rs. 17,500
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>🎯 Goal</h3>
+          <div class="amount">
+            35%
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- Add Buttons -->
+      <section class="add-buttons">
+
+        <button class="btn btn-income">
+          + Add Income
+        </button>
+
+        <button class="btn btn-expense">
+          + Add Expense
+        </button>
+
+      </section>
+
+
+      <!-- Savings Goal -->
+      <section class="section">
+
+        <div class="section-title">
+          <h2>🎯 Savings Goal</h2>
+        </div>
+
+        <div class="card">
+
+          <h3>New Mobile</h3>
+
+          <div style="
+            display:flex;
+            justify-content:space-between;
+            margin:10px 0;
+          ">
+            <span>Rs. 17,500 saved</span>
+            <strong>35%</strong>
+          </div>
+
+          <div style="
+            width:100%;
+            height:10px;
+            background:#e5ece7;
+            border-radius:10px;
+            overflow:hidden;
+          ">
+            <div style="
+              width:35%;
+              height:100%;
+              background:#16803c;
+            "></div>
+          </div>
+
+          <p style="
+            margin-top:10px;
+            color:#718078;
+          ">
+            Target: Rs. 50,000
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- Recent Transactions -->
+      <section class="section">
+
+        <div class="section-title">
+          <h2>Recent Transactions</h2>
+          <span style="color:#16803c;">
+            See All
+          </span>
+        </div>
+
+
+        <div class="card">
+
+          <div class="transaction">
+
+            <div class="icon">
+              🛒
+            </div>
+
+            <div class="transaction-info">
+              <strong>Grocery</strong>
+              <small>Today • Expense</small>
+            </div>
+
+            <div class="transaction-amount expense">
+              - Rs. 2,500
+            </div>
+
+          </div>
+
+
+          <div class="transaction">
+
+            <div class="icon">
+              ⛽
+            </div>
+
+            <div class="transaction-info">
+              <strong>Petrol</strong>
+              <small>Yesterday • Expense</small>
+            </div>
+
+            <div class="transaction-amount expense">
+              - Rs. 1,500
+            </div>
+
+          </div>
+
+
+          <div class="transaction">
+
+            <div class="icon">
+              💰
+            </div>
+
+            <div class="transaction-info">
+              <strong>Salary</strong>
+              <small>01 Aug • Income</small>
+            </div>
+
+            <div class="transaction-amount income">
+              + Rs. 50,000
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+
+      <div class="nav-item active">
+        <span class="nav-icon">🏠</span>
+        Home
+      </div>
+
+      <div class="nav-item">
+        <span class="nav-icon">📋</span>
+        Transactions
+      </div>
+
+      <div class="nav-item">
+        <span class="nav-icon">📊</span>
+        Reports
+      </div>
+
+      <div class="nav-item">
+        <span class="nav-icon">🎯</span>
+        Goals
+      </div>
+
+      <div class="nav-item">
+        <span class="nav-icon">⚙️</span>
+        More
+      </div>
+
+    </nav>
+
+  </div>
 
 </body>
 </html>
