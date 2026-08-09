@@ -6,6 +6,96 @@
   <meta name="theme-color" content="#159447">
   <title>Bachat Pro</title>
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    .report-card {
+      background: white;
+      border-radius: 22px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 24px rgba(20,50,30,.08);
+      border: 1px solid #e4ebe6;
+    }
+
+    .report-card h2 {
+      margin-bottom: 16px;
+      font-size: 20px;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .report-box {
+      background: #f4f8f5;
+      border-radius: 16px;
+      padding: 15px;
+    }
+
+    .report-box span {
+      display: block;
+      color: #748078;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .report-box strong {
+      font-size: 19px;
+    }
+
+    #monthIncome {
+      color: #159447;
+    }
+
+    #monthExpense {
+      color: #e5484d;
+    }
+
+    #monthSaving {
+      color: #2878d4;
+    }
+
+    .category-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #e4ebe6;
+    }
+
+    .category-row:last-child {
+      border-bottom: none;
+    }
+
+    .category-name {
+      font-weight: bold;
+    }
+
+    .category-amount {
+      color: #e5484d;
+      font-weight: bold;
+    }
+
+    .top-category {
+      background: #eaf8ef;
+      padding: 15px;
+      border-radius: 16px;
+      margin-bottom: 15px;
+    }
+
+    .top-category span {
+      display: block;
+      color: #748078;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .top-category strong {
+      color: #159447;
+      font-size: 20px;
+    }
+  </style>
 </head>
 
 <body>
@@ -20,9 +110,11 @@
   <!-- Balance -->
   <section class="balance-card">
     <p>Total Bachat</p>
+
     <h2 id="balance">Rs 0</h2>
 
     <div class="summary">
+
       <div>
         <span>💰 Income</span>
         <strong id="income">Rs 0</strong>
@@ -32,11 +124,12 @@
         <span>💸 Expense</span>
         <strong id="expense">Rs 0</strong>
       </div>
+
     </div>
   </section>
 
 
-  <!-- Add / Edit Transaction -->
+  <!-- Add / Edit -->
   <section class="form-card">
 
     <h2 id="formTitle">➕ Add Transaction</h2>
@@ -54,6 +147,7 @@
     >
 
     <select id="category">
+
       <option value="Grocery">🛒 Grocery</option>
       <option value="Electricity">💡 Electricity</option>
       <option value="Gas">🔥 Gas</option>
@@ -66,6 +160,7 @@
       <option value="Salary">💼 Salary</option>
       <option value="Business">💼 Business</option>
       <option value="Other">📦 Other</option>
+
     </select>
 
     <input type="date" id="date">
@@ -92,7 +187,7 @@
   </section>
 
 
-  <!-- Search & Filter -->
+  <!-- Search -->
   <section class="form-card">
 
     <h2>🔍 Find Transactions</h2>
@@ -107,7 +202,6 @@
     <select id="filterCategory" onchange="updateScreen()">
 
       <option value="all">📂 All Categories</option>
-
       <option value="Grocery">🛒 Grocery</option>
       <option value="Electricity">💡 Electricity</option>
       <option value="Gas">🔥 Gas</option>
@@ -126,13 +220,83 @@
   </section>
 
 
+  <!-- Reports -->
+  <section class="report-card">
+
+    <h2>📊 Monthly Report</h2>
+
+    <div class="report-grid">
+
+      <div class="report-box">
+        <span>💰 Monthly Income</span>
+        <strong id="monthIncome">Rs 0</strong>
+      </div>
+
+      <div class="report-box">
+        <span>💸 Monthly Expense</span>
+        <strong id="monthExpense">Rs 0</strong>
+      </div>
+
+      <div class="report-box">
+        <span>💵 Monthly Bachat</span>
+        <strong id="monthSaving">Rs 0</strong>
+      </div>
+
+      <div class="report-box">
+        <span>📋 Transactions</span>
+        <strong id="monthTransactions">0</strong>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- Top category -->
+  <section class="report-card">
+
+    <h2>🏆 Top Expense Category</h2>
+
+    <div class="top-category">
+
+      <span>Highest spending</span>
+
+      <strong id="topCategory">
+        No expense yet
+      </strong>
+
+    </div>
+
+  </section>
+
+
+  <!-- Category report -->
+  <section class="report-card">
+
+    <h2>📂 Expense by Category</h2>
+
+    <div id="categoryReport">
+
+      <p class="empty">
+        No expense data yet.
+      </p>
+
+    </div>
+
+  </section>
+
+
   <!-- Transactions -->
   <section class="transactions-card">
 
     <h2>📋 Transactions</h2>
 
     <div id="transactions">
-      <p class="empty">No transactions yet.</p>
+
+      <p class="empty">
+        No transactions yet.
+      </p>
+
     </div>
 
   </section>
@@ -170,7 +334,7 @@ function saveData() {
 }
 
 
-// Save new transaction OR edited transaction
+// Save / Update
 function saveTransaction() {
 
   const type =
@@ -207,16 +371,12 @@ function saveTransaction() {
   }
 
 
-  // EDIT MODE
   if (editingId !== null) {
 
     const transaction =
       transactions.find(
-        function(item) {
-          return item.id === editingId;
-        }
+        item => item.id === editingId
       );
-
 
     if (transaction) {
 
@@ -227,7 +387,6 @@ function saveTransaction() {
       transaction.note = note;
 
     }
-
 
     editingId = null;
 
@@ -240,10 +399,7 @@ function saveTransaction() {
     document.getElementById("cancelButton").style.display =
       "none";
 
-
   } else {
-
-    // NEW TRANSACTION
 
     transactions.push({
 
@@ -269,23 +425,20 @@ function saveTransaction() {
   clearForm();
 
   updateScreen();
+
+  updateReports();
 }
 
 
-// Start editing
+// Edit
 function editTransaction(id) {
 
   const transaction =
     transactions.find(
-      function(item) {
-        return item.id === id;
-      }
+      item => item.id === id
     );
 
-
-  if (!transaction) {
-    return;
-  }
+  if (!transaction) return;
 
 
   editingId = id;
@@ -321,10 +474,11 @@ function editTransaction(id) {
     top: 0,
     behavior: "smooth"
   });
+
 }
 
 
-// Cancel editing
+// Cancel edit
 function cancelEdit() {
 
   editingId = null;
@@ -339,10 +493,11 @@ function cancelEdit() {
     "none";
 
   clearForm();
+
 }
 
 
-// Clear form
+// Clear
 function clearForm() {
 
   document.getElementById("amount").value = "";
@@ -356,6 +511,7 @@ function clearForm() {
     "Grocery";
 
   setToday();
+
 }
 
 
@@ -369,15 +525,16 @@ function deleteTransaction(id) {
 
   transactions =
     transactions.filter(
-      function(item) {
-        return item.id !== id;
-      }
+      item => item.id !== id
     );
 
 
   saveData();
 
   updateScreen();
+
+  updateReports();
+
 }
 
 
@@ -395,23 +552,29 @@ function formatDate(dateString) {
       year: "numeric"
     }
   );
+
 }
 
 
-// Update screen
+// Main screen
 function updateScreen() {
 
   let income = 0;
+
   let expense = 0;
 
 
   transactions.forEach(
-    function(transaction) {
+    transaction => {
 
       if (transaction.type === "income") {
+
         income += transaction.amount;
+
       } else {
+
         expense += transaction.amount;
+
       }
 
     }
@@ -444,7 +607,7 @@ function updateScreen() {
 
   const filtered =
     transactions.filter(
-      function(transaction) {
+      transaction => {
 
         const searchable =
           (
@@ -465,7 +628,8 @@ function updateScreen() {
           transaction.category === selectedCategory;
 
 
-        return matchesSearch && matchesCategory;
+        return matchesSearch &&
+               matchesCategory;
 
       }
     );
@@ -490,12 +654,10 @@ function updateScreen() {
   filtered
     .slice()
     .sort(
-      function(a, b) {
-        return b.id - a.id;
-      }
+      (a,b) => b.id - a.id
     )
     .forEach(
-      function(transaction) {
+      transaction => {
 
         const item =
           document.createElement("div");
@@ -508,14 +670,14 @@ function updateScreen() {
 
         const sign =
           transaction.type === "income"
-            ? "+"
-            : "-";
+          ? "+"
+          : "-";
 
 
         const note =
           transaction.note
-            ? " • " + transaction.note
-            : "";
+          ? " • " + transaction.note
+          : "";
 
 
         item.innerHTML = `
@@ -537,18 +699,15 @@ function updateScreen() {
           <div>
 
             <strong>
-              ${sign} Rs ${transaction.amount.toLocaleString()}
+              ${sign}
+              Rs ${transaction.amount.toLocaleString()}
             </strong>
 
 
             <button
               class="delete-btn"
               onclick="editTransaction(${transaction.id})"
-              title="Edit"
-              style="
-                background:#eaf4ff;
-                color:#2878d4;
-              "
+              style="background:#eaf4ff;color:#2878d4;"
             >
               ✏️
             </button>
@@ -557,7 +716,6 @@ function updateScreen() {
             <button
               class="delete-btn"
               onclick="deleteTransaction(${transaction.id})"
-              title="Delete"
             >
               ×
             </button>
@@ -571,10 +729,183 @@ function updateScreen() {
 
       }
     );
+
 }
 
 
-// Security helper
+// Monthly reports
+function updateReports() {
+
+  const now =
+    new Date();
+
+  const currentMonth =
+    now.getMonth();
+
+  const currentYear =
+    now.getFullYear();
+
+
+  let monthIncome = 0;
+
+  let monthExpense = 0;
+
+  let monthTransactions = 0;
+
+
+  const categories = {};
+
+
+  transactions.forEach(
+    transaction => {
+
+      const date =
+        new Date(
+          transaction.date + "T00:00:00"
+        );
+
+
+      if (
+        date.getMonth() === currentMonth &&
+        date.getFullYear() === currentYear
+      ) {
+
+        monthTransactions++;
+
+
+        if (transaction.type === "income") {
+
+          monthIncome += transaction.amount;
+
+        } else {
+
+          monthExpense += transaction.amount;
+
+
+          if (
+            !categories[transaction.category]
+          ) {
+
+            categories[transaction.category] = 0;
+
+          }
+
+
+          categories[transaction.category] +=
+            transaction.amount;
+
+        }
+
+      }
+
+    }
+  );
+
+
+  const saving =
+    monthIncome - monthExpense;
+
+
+  document.getElementById(
+    "monthIncome"
+  ).textContent =
+    "Rs " + monthIncome.toLocaleString();
+
+
+  document.getElementById(
+    "monthExpense"
+  ).textContent =
+    "Rs " + monthExpense.toLocaleString();
+
+
+  document.getElementById(
+    "monthSaving"
+  ).textContent =
+    "Rs " + saving.toLocaleString();
+
+
+  document.getElementById(
+    "monthTransactions"
+  ).textContent =
+    monthTransactions;
+
+
+  // Category report
+  const report =
+    document.getElementById(
+      "categoryReport"
+    );
+
+
+  const categoryList =
+    Object.entries(categories)
+      .sort(
+        (a,b) => b[1] - a[1]
+      );
+
+
+  if (categoryList.length === 0) {
+
+    report.innerHTML =
+      '<p class="empty">No expense data this month.</p>';
+
+    document.getElementById(
+      "topCategory"
+    ).textContent =
+      "No expense yet";
+
+    return;
+  }
+
+
+  report.innerHTML = "";
+
+
+  categoryList.forEach(
+    ([category, amount]) => {
+
+      const row =
+        document.createElement("div");
+
+
+      row.className =
+        "category-row";
+
+
+      row.innerHTML = `
+
+        <span class="category-name">
+          ${escapeHTML(category)}
+        </span>
+
+        <span class="category-amount">
+          Rs ${amount.toLocaleString()}
+        </span>
+
+      `;
+
+
+      report.appendChild(row);
+
+    }
+  );
+
+
+  const top =
+    categoryList[0];
+
+
+  document.getElementById(
+    "topCategory"
+  ).textContent =
+    top[0] +
+    " — Rs " +
+    top[1].toLocaleString();
+
+}
+
+
+// Security
 function escapeHTML(text) {
 
   const div =
@@ -583,6 +914,7 @@ function escapeHTML(text) {
   div.textContent = text;
 
   return div.innerHTML;
+
 }
 
 
@@ -590,6 +922,8 @@ function escapeHTML(text) {
 setToday();
 
 updateScreen();
+
+updateReports();
 
 </script>
 
