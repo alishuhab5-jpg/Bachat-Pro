@@ -1,239 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#16803c">
-
-  <title>Bachat Pro</title>
-
-  <!-- Our design file -->
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bachat Pro</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="app">
+<header>
+    <h1>💰 Bachat Pro</h1>
+    <p>Daily Expense & Savings</p>
+</header>
 
-    <!-- Header -->
-    <header class="header">
-      <h1>💰 Bachat Pro</h1>
-      <p>Save Smart • Spend Wise</p>
-    </header>
+<main>
 
+    <section class="balance-card">
+        <p>Total Balance</p>
+        <h2 id="balance">Rs 0</h2>
 
-    <main class="content">
+        <div class="summary">
+            <div>
+                <span>Income</span>
+                <strong id="income">Rs 0</strong>
+            </div>
 
-      <!-- Balance -->
-      <section class="balance-card">
-        <small>Total Bachat</small>
-
-        <div class="balance">
-          Rs. 17,500
+            <div>
+                <span>Expense</span>
+                <strong id="expense">Rs 0</strong>
+            </div>
         </div>
+    </section>
 
-        <small>August 2026</small>
-      </section>
+    <section class="form-card">
 
+        <h2>Add Transaction</h2>
 
-      <!-- Summary Cards -->
-      <section class="cards">
+        <input
+            type="text"
+            id="description"
+            placeholder="Example: Salary / Food"
+        >
 
-        <div class="card">
-          <h3>💰 Income</h3>
-          <div class="amount income">
-            Rs. 50,000
-          </div>
-        </div>
+        <input
+            type="number"
+            id="amount"
+            placeholder="Amount (Rs)"
+        >
 
-        <div class="card">
-          <h3>💸 Expenses</h3>
-          <div class="amount expense">
-            Rs. 32,500
-          </div>
-        </div>
+        <select id="type">
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+        </select>
 
-        <div class="card">
-          <h3>🏦 Bachat</h3>
-          <div class="amount saving">
-            Rs. 17,500
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>🎯 Goal</h3>
-          <div class="amount">
-            35%
-          </div>
-        </div>
-
-      </section>
-
-
-      <!-- Add Buttons -->
-      <section class="add-buttons">
-
-        <button class="btn btn-income">
-          + Add Income
+        <button onclick="addTransaction()">
+            + Add Transaction
         </button>
 
-        <button class="btn btn-expense">
-          + Add Expense
-        </button>
+    </section>
 
-      </section>
+    <section class="transactions-card">
 
+        <h2>Transactions</h2>
 
-      <!-- Savings Goal -->
-      <section class="section">
-
-        <div class="section-title">
-          <h2>🎯 Savings Goal</h2>
+        <div id="transactions">
+            <p class="empty">No transactions yet.</p>
         </div>
 
-        <div class="card">
+    </section>
 
-          <h3>New Mobile</h3>
+</main>
 
-          <div style="
-            display:flex;
-            justify-content:space-between;
-            margin:10px 0;
-          ">
-            <span>Rs. 17,500 saved</span>
-            <strong>35%</strong>
-          </div>
+<script>
 
-          <div style="
-            width:100%;
-            height:10px;
-            background:#e5ece7;
-            border-radius:10px;
-            overflow:hidden;
-          ">
-            <div style="
-              width:35%;
-              height:100%;
-              background:#16803c;
-            "></div>
-          </div>
+let transactions =
+    JSON.parse(localStorage.getItem("bachatTransactions")) || [];
 
-          <p style="
-            margin-top:10px;
-            color:#718078;
-          ">
-            Target: Rs. 50,000
-          </p>
+function saveData() {
+    localStorage.setItem(
+        "bachatTransactions",
+        JSON.stringify(transactions)
+    );
+}
 
-        </div>
+function addTransaction() {
 
-      </section>
+    const description =
+        document.getElementById("description").value.trim();
 
+    const amount =
+        Number(document.getElementById("amount").value);
 
-      <!-- Recent Transactions -->
-      <section class="section">
+    const type =
+        document.getElementById("type").value;
 
-        <div class="section-title">
-          <h2>Recent Transactions</h2>
-          <span style="color:#16803c;">
-            See All
-          </span>
-        </div>
+    if (!description || !amount || amount <= 0) {
+        alert("Please enter description and amount.");
+        return;
+    }
 
+    const transaction = {
+        id: Date.now(),
+        description: description,
+        amount: amount,
+        type: type
+    };
 
-        <div class="card">
+    transactions.push(transaction);
 
-          <div class="transaction">
+    saveData();
 
-            <div class="icon">
-              🛒
+    document.getElementById("description").value = "";
+    document.getElementById("amount").value = "";
+
+    updateScreen();
+}
+
+function deleteTransaction(id) {
+
+    transactions =
+        transactions.filter(t => t.id !== id);
+
+    saveData();
+
+    updateScreen();
+}
+
+function updateScreen() {
+
+    let income = 0;
+    let expense = 0;
+
+    transactions.forEach(t => {
+
+        if (t.type === "income") {
+            income += t.amount;
+        } else {
+            expense += t.amount;
+        }
+
+    });
+
+    const balance = income - expense;
+
+    document.getElementById("income").textContent =
+        "Rs " + income.toLocaleString();
+
+    document.getElementById("expense").textContent =
+        "Rs " + expense.toLocaleString();
+
+    document.getElementById("balance").textContent =
+        "Rs " + balance.toLocaleString();
+
+    const container =
+        document.getElementById("transactions");
+
+    if (transactions.length === 0) {
+
+        container.innerHTML =
+            '<p class="empty">No transactions yet.</p>';
+
+        return;
+    }
+
+    container.innerHTML = "";
+
+    [...transactions].reverse().forEach(t => {
+
+        const item = document.createElement("div");
+
+        item.className =
+            "transaction " + t.type;
+
+        item.innerHTML = `
+            <div>
+                <strong>${escapeHTML(t.description)}</strong>
+                <small>${t.type === "income" ? "Income" : "Expense"}</small>
             </div>
 
-            <div class="transaction-info">
-              <strong>Grocery</strong>
-              <small>Today • Expense</small>
+            <div>
+                <strong>
+                    ${t.type === "income" ? "+" : "-"} Rs ${t.amount.toLocaleString()}
+                </strong>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteTransaction(${t.id})">
+                    ×
+                </button>
             </div>
+        `;
 
-            <div class="transaction-amount expense">
-              - Rs. 2,500
-            </div>
+        container.appendChild(item);
 
-          </div>
+    });
+}
 
+function escapeHTML(text) {
 
-          <div class="transaction">
+    const div = document.createElement("div");
+    div.textContent = text;
+    return div.innerHTML;
 
-            <div class="icon">
-              ⛽
-            </div>
+}
 
-            <div class="transaction-info">
-              <strong>Petrol</strong>
-              <small>Yesterday • Expense</small>
-            </div>
+updateScreen();
 
-            <div class="transaction-amount expense">
-              - Rs. 1,500
-            </div>
-
-          </div>
-
-
-          <div class="transaction">
-
-            <div class="icon">
-              💰
-            </div>
-
-            <div class="transaction-info">
-              <strong>Salary</strong>
-              <small>01 Aug • Income</small>
-            </div>
-
-            <div class="transaction-amount income">
-              + Rs. 50,000
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-    </main>
-
-
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-
-      <div class="nav-item active">
-        <span class="nav-icon">🏠</span>
-        Home
-      </div>
-
-      <div class="nav-item">
-        <span class="nav-icon">📋</span>
-        Transactions
-      </div>
-
-      <div class="nav-item">
-        <span class="nav-icon">📊</span>
-        Reports
-      </div>
-
-      <div class="nav-item">
-        <span class="nav-icon">🎯</span>
-        Goals
-      </div>
-
-      <div class="nav-item">
-        <span class="nav-icon">⚙️</span>
-        More
-      </div>
-
-    </nav>
-
-  </div>
+</script>
 
 </body>
 </html>
