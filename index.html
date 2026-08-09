@@ -1226,7 +1226,72 @@ function renderAll(){
 // ========================================
 
 function renderReport(){
+function renderTopCategory(){
 
+  const now = new Date();
+
+  const month = now.getMonth();
+  const year = now.getFullYear();
+
+  const categories = {};
+
+  transactions.forEach(function(t){
+
+    const d = new Date(
+      t.date + "T00:00:00"
+    );
+
+    if(
+      t.type === "expense" &&
+      d.getMonth() === month &&
+      d.getFullYear() === year
+    ){
+
+      if(!categories[t.category]){
+        categories[t.category] = 0;
+      }
+
+      categories[t.category] += t.amount;
+
+    }
+
+  });
+
+
+  const list =
+    Object.entries(categories)
+      .sort(function(a,b){
+        return b[1] - a[1];
+      });
+
+
+  const box =
+    document.getElementById("topCategory");
+
+
+  if(list.length === 0){
+
+    box.textContent =
+      "No expense data yet.";
+
+    return;
+
+  }
+
+
+  const topName = list[0][0];
+  const topAmount = list[0][1];
+
+
+  box.innerHTML =
+    "🏆 <strong>" +
+    escapeHTML(topName) +
+    "</strong>" +
+    "<br><br>" +
+    "Rs " +
+    topAmount.toLocaleString();
+
+  }
   const now =
     new Date();
 
