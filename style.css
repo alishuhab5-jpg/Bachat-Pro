@@ -4,137 +4,270 @@
   padding: 0;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background: #f4f8f5;
-  color: #17231b;
+:root {
+  --green: #159447;
+  --green-dark: #087535;
+  --green-light: #eaf8ef;
+  --red: #e5484d;
+  --blue: #2878d4;
+  --text: #17231b;
+  --muted: #748078;
+  --bg: #f4f7f5;
+  --white: #ffffff;
+  --border: #e4ebe6;
+  --shadow: 0 8px 24px rgba(20, 50, 30, 0.08);
 }
 
-.app {
-  max-width: 600px;
-  margin: auto;
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
   min-height: 100vh;
-  padding-bottom: 85px;
+}
+
+/* App container */
+main {
+  width: 100%;
+  max-width: 620px;
+  margin: auto;
+  padding: 18px;
 }
 
 /* Header */
-.header {
-  background: #16803c;
+header {
+  max-width: 620px;
+  margin: auto;
+  padding: 30px 20px 24px;
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
   color: white;
+  border-radius: 0 0 30px 30px;
   text-align: center;
-  padding: 28px 20px;
-  border-radius: 0 0 28px 28px;
+  box-shadow: 0 8px 20px rgba(21, 148, 71, 0.22);
 }
 
-.header h1 {
+header h1 {
   font-size: 30px;
   margin-bottom: 7px;
 }
 
-.header p {
-  font-size: 15px;
+header p {
+  font-size: 14px;
   opacity: 0.9;
-}
-
-/* Main content */
-.content {
-  padding: 20px;
 }
 
 /* Balance */
 .balance-card {
-  background: linear-gradient(135deg, #16803c, #0d5f2b);
-  color: white;
+  background: var(--white);
   border-radius: 22px;
-  padding: 25px;
-  text-align: center;
+  padding: 22px;
   margin-bottom: 18px;
-  box-shadow: 0 8px 20px rgba(0, 80, 35, 0.18);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
 }
 
-.balance-card small {
-  opacity: 0.85;
+.balance-card > p {
+  color: var(--muted);
+  font-size: 14px;
 }
 
-.balance {
+.balance-card h2 {
+  color: var(--green-dark);
   font-size: 34px;
-  font-weight: bold;
-  margin: 10px 0;
+  margin: 8px 0 20px;
 }
 
-/* Summary cards */
-.cards {
+.summary {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin-bottom: 18px;
 }
 
-.card {
-  background: white;
-  border-radius: 17px;
-  padding: 18px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
-}
-
-.card h3 {
-  font-size: 15px;
-  margin-bottom: 10px;
-}
-
-.amount {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-/* Colors */
-.income {
-  color: #16803c;
-}
-
-.expense {
-  color: #d93636;
-}
-
-.saving {
-  color: #1769aa;
-}
-
-/* Buttons */
-.add-buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 25px;
-}
-
-.btn {
-  border: none;
+.summary > div {
+  background: var(--green-light);
   border-radius: 15px;
-  padding: 16px 10px;
-  color: white;
+  padding: 14px;
+}
+
+.summary span {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.summary strong {
+  font-size: 19px;
+}
+
+/* Income/Expense colors */
+#income {
+  color: var(--green);
+}
+
+#expense {
+  color: var(--red);
+}
+
+/* Form */
+.form-card,
+.transactions-card {
+  background: var(--white);
+  border-radius: 22px;
+  padding: 20px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.form-card h2,
+.transactions-card h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #fafcfb;
+  color: var(--text);
   font-size: 15px;
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(21, 148, 71, 0.1);
+}
+
+/* Main add button */
+.form-card > button {
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  color: white;
+  font-size: 16px;
   font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 7px 16px rgba(21, 148, 71, 0.2);
+}
+
+.form-card > button:active {
+  transform: scale(0.98);
+}
+
+/* Transactions */
+#transactions {
+  margin-top: 5px;
+}
+
+.empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 25px 10px;
+}
+
+.transaction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.transaction:last-child {
+  border-bottom: none;
+}
+
+.transaction > div:first-child {
+  flex: 1;
+}
+
+.transaction strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.transaction small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.transaction.income > div:last-child strong {
+  color: var(--green);
+}
+
+.transaction.expense > div:last-child strong {
+  color: var(--red);
+}
+
+/* Delete */
+.delete-btn {
+  margin-left: 8px;
+  border: none;
+  background: #fff0f0;
+  color: var(--red);
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  font-size: 18px;
   cursor: pointer;
 }
 
-.btn-income {
-  background: #16803c;
+.delete-btn:active {
+  transform: scale(0.9);
 }
 
-.btn-expense {
-  background: #d93636;
+/* Mobile */
+@media (max-width: 480px) {
+  header {
+    border-radius: 0 0 25px 25px;
+    padding: 25px 16px 21px;
+  }
+
+  header h1 {
+    font-size: 26px;
+  }
+
+  main {
+    padding: 14px;
+  }
+
+  .balance-card h2 {
+    font-size: 29px;
+  }
+
+  .summary strong {
+    font-size: 17px;
+  }
+
+  .form-card,
+  .transactions-card {
+    padding: 17px;
+    border-radius: 19px;
+  }
+
+  .transaction {
+    padding: 13px 0;
+  }
 }
 
-.btn:active {
-  transform: scale(0.97);
-}
+/* Desktop */
+@media (min-width: 621px) {
+  body {
+    padding-bottom: 30px;
+  }
 
-/* Sections */
-.section {
-  margin-bottom: 25px;
-}
-
-.section-title {
-  display: flex;
-  justify-content
+  header {
+    margin-top: 20px;
+    border-radius: 30px;
+  }
+  }
