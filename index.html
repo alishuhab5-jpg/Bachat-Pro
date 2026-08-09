@@ -8,7 +8,8 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    .report-card {
+    .report-card,
+    .goal-card {
       background: white;
       border-radius: 22px;
       padding: 20px;
@@ -17,7 +18,8 @@
       border: 1px solid #e4ebe6;
     }
 
-    .report-card h2 {
+    .report-card h2,
+    .goal-card h2 {
       margin-bottom: 16px;
       font-size: 20px;
     }
@@ -45,17 +47,9 @@
       font-size: 19px;
     }
 
-    #monthIncome {
-      color: #159447;
-    }
-
-    #monthExpense {
-      color: #e5484d;
-    }
-
-    #monthSaving {
-      color: #2878d4;
-    }
+    #monthIncome { color: #159447; }
+    #monthExpense { color: #e5484d; }
+    #monthSaving { color: #2878d4; }
 
     .category-row {
       display: flex;
@@ -81,7 +75,6 @@
       background: #eaf8ef;
       padding: 15px;
       border-radius: 16px;
-      margin-bottom: 15px;
     }
 
     .top-category span {
@@ -94,6 +87,87 @@
     .top-category strong {
       color: #159447;
       font-size: 20px;
+    }
+
+    /* Savings Goals */
+
+    .goal-item {
+      border: 1px solid #e4ebe6;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 14px;
+      background: #fbfdfb;
+    }
+
+    .goal-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .goal-name {
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .goal-percent {
+      color: #159447;
+      font-weight: bold;
+    }
+
+    .goal-money {
+      display: flex;
+      justify-content: space-between;
+      color: #748078;
+      font-size: 13px;
+      margin-bottom: 9px;
+    }
+
+    .progress-bg {
+      width: 100%;
+      height: 11px;
+      background: #e5eee8;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 13px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg,#159447,#087535);
+      border-radius: 20px;
+      transition: width .3s ease;
+    }
+
+    .goal-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .goal-actions button {
+      flex: 1;
+      border: none;
+      border-radius: 11px;
+      padding: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .add-saving-btn {
+      background: #eaf8ef;
+      color: #159447;
+    }
+
+    .delete-goal-btn {
+      background: #fff0f0;
+      color: #e5484d;
+    }
+
+    .goal-complete {
+      color: #159447;
+      font-weight: bold;
+      margin-top: 8px;
     }
   </style>
 </head>
@@ -109,6 +183,7 @@
 
   <!-- Balance -->
   <section class="balance-card">
+
     <p>Total Bachat</p>
 
     <h2 id="balance">Rs 0</h2>
@@ -126,10 +201,11 @@
       </div>
 
     </div>
+
   </section>
 
 
-  <!-- Add / Edit -->
+  <!-- Add Transaction -->
   <section class="form-card">
 
     <h2 id="formTitle">➕ Add Transaction</h2>
@@ -147,7 +223,6 @@
     >
 
     <select id="category">
-
       <option value="Grocery">🛒 Grocery</option>
       <option value="Electricity">💡 Electricity</option>
       <option value="Gas">🔥 Gas</option>
@@ -160,7 +235,6 @@
       <option value="Salary">💼 Salary</option>
       <option value="Business">💼 Business</option>
       <option value="Other">📦 Other</option>
-
     </select>
 
     <input type="date" id="date">
@@ -179,7 +253,7 @@
     <button
       onclick="cancelEdit()"
       id="cancelButton"
-      style="display:none; margin-top:10px; background:#777;"
+      style="display:none;margin-top:10px;background:#777;"
     >
       Cancel Edit
     </button>
@@ -220,7 +294,7 @@
   </section>
 
 
-  <!-- Reports -->
+  <!-- Monthly Reports -->
   <section class="report-card">
 
     <h2>📊 Monthly Report</h2>
@@ -252,7 +326,7 @@
   </section>
 
 
-  <!-- Top category -->
+  <!-- Top Category -->
   <section class="report-card">
 
     <h2>🏆 Top Expense Category</h2>
@@ -270,15 +344,60 @@
   </section>
 
 
-  <!-- Category report -->
+  <!-- Category Report -->
   <section class="report-card">
 
     <h2>📂 Expense by Category</h2>
 
     <div id="categoryReport">
+      <p class="empty">No expense data yet.</p>
+    </div>
+
+  </section>
+
+
+  <!-- Savings Goals -->
+  <section class="goal-card">
+
+    <h2>🎯 Savings Goals</h2>
+
+    <input
+      type="text"
+      id="goalName"
+      placeholder="Goal name e.g. New Mobile"
+      maxlength="50"
+    >
+
+    <input
+      type="number"
+      id="goalTarget"
+      placeholder="Target amount (Rs)"
+      min="1"
+    >
+
+    <input
+      type="number"
+      id="goalSaved"
+      placeholder="Already saved (Rs)"
+      min="0"
+    >
+
+    <button onclick="addGoal()">
+      🎯 Create Savings Goal
+    </button>
+
+  </section>
+
+
+  <!-- Goals List -->
+  <section class="goal-card">
+
+    <h2>💰 My Goals</h2>
+
+    <div id="goalsList">
 
       <p class="empty">
-        No expense data yet.
+        No savings goals yet.
       </p>
 
     </div>
@@ -306,6 +425,11 @@
 
 <script>
 
+
+// ===============================
+// TRANSACTIONS
+// ===============================
+
 let transactions =
   JSON.parse(
     localStorage.getItem("bachatTransactions")
@@ -314,17 +438,28 @@ let transactions =
 let editingId = null;
 
 
+// ===============================
+// SAVINGS GOALS
+// ===============================
+
+let savingsGoals =
+  JSON.parse(
+    localStorage.getItem("bachatSavingsGoals")
+  ) || [];
+
+
 // Today's date
 function setToday() {
 
   const today =
     new Date().toISOString().split("T")[0];
 
-  document.getElementById("date").value = today;
+  document.getElementById("date").value =
+    today;
 }
 
 
-// Save data
+// Save transaction data
 function saveData() {
 
   localStorage.setItem(
@@ -334,7 +469,20 @@ function saveData() {
 }
 
 
-// Save / Update
+// Save goals
+function saveGoals() {
+
+  localStorage.setItem(
+    "bachatSavingsGoals",
+    JSON.stringify(savingsGoals)
+  );
+}
+
+
+// ===============================
+// ADD / EDIT TRANSACTION
+// ===============================
+
 function saveTransaction() {
 
   const type =
@@ -378,6 +526,7 @@ function saveTransaction() {
         item => item.id === editingId
       );
 
+
     if (transaction) {
 
       transaction.type = type;
@@ -388,16 +537,27 @@ function saveTransaction() {
 
     }
 
+
     editingId = null;
 
-    document.getElementById("formTitle").textContent =
+
+    document.getElementById(
+      "formTitle"
+    ).textContent =
       "➕ Add Transaction";
 
-    document.getElementById("saveButton").textContent =
+
+    document.getElementById(
+      "saveButton"
+    ).textContent =
       "Save Transaction";
 
-    document.getElementById("cancelButton").style.display =
+
+    document.getElementById(
+      "cancelButton"
+    ).style.display =
       "none";
+
 
   } else {
 
@@ -427,16 +587,21 @@ function saveTransaction() {
   updateScreen();
 
   updateReports();
+
 }
 
 
-// Edit
+// ===============================
+// EDIT TRANSACTION
+// ===============================
+
 function editTransaction(id) {
 
   const transaction =
     transactions.find(
       item => item.id === id
     );
+
 
   if (!transaction) return;
 
@@ -460,13 +625,21 @@ function editTransaction(id) {
     transaction.note || "";
 
 
-  document.getElementById("formTitle").textContent =
+  document.getElementById(
+    "formTitle"
+  ).textContent =
     "✏️ Edit Transaction";
 
-  document.getElementById("saveButton").textContent =
+
+  document.getElementById(
+    "saveButton"
+  ).textContent =
     "Update Transaction";
 
-  document.getElementById("cancelButton").style.display =
+
+  document.getElementById(
+    "cancelButton"
+  ).style.display =
     "block";
 
 
@@ -483,26 +656,38 @@ function cancelEdit() {
 
   editingId = null;
 
-  document.getElementById("formTitle").textContent =
+
+  document.getElementById(
+    "formTitle"
+  ).textContent =
     "➕ Add Transaction";
 
-  document.getElementById("saveButton").textContent =
+
+  document.getElementById(
+    "saveButton"
+  ).textContent =
     "Save Transaction";
 
-  document.getElementById("cancelButton").style.display =
+
+  document.getElementById(
+    "cancelButton"
+  ).style.display =
     "none";
+
 
   clearForm();
 
 }
 
 
-// Clear
+// Clear transaction form
 function clearForm() {
 
-  document.getElementById("amount").value = "";
+  document.getElementById("amount").value =
+    "";
 
-  document.getElementById("note").value = "";
+  document.getElementById("note").value =
+    "";
 
   document.getElementById("type").value =
     "expense";
@@ -515,7 +700,7 @@ function clearForm() {
 }
 
 
-// Delete
+// Delete transaction
 function deleteTransaction(id) {
 
   if (!confirm("Delete this transaction?")) {
@@ -542,7 +727,10 @@ function deleteTransaction(id) {
 function formatDate(dateString) {
 
   const date =
-    new Date(dateString + "T00:00:00");
+    new Date(
+      dateString + "T00:00:00"
+    );
+
 
   return date.toLocaleDateString(
     "en-GB",
@@ -556,7 +744,10 @@ function formatDate(dateString) {
 }
 
 
-// Main screen
+// ===============================
+// UPDATE MAIN SCREEN
+// ===============================
+
 function updateScreen() {
 
   let income = 0;
@@ -567,7 +758,9 @@ function updateScreen() {
   transactions.forEach(
     transaction => {
 
-      if (transaction.type === "income") {
+      if (
+        transaction.type === "income"
+      ) {
 
         income += transaction.amount;
 
@@ -585,24 +778,39 @@ function updateScreen() {
     income - expense;
 
 
-  document.getElementById("income").textContent =
-    "Rs " + income.toLocaleString();
+  document.getElementById(
+    "income"
+  ).textContent =
+    "Rs " +
+    income.toLocaleString();
 
-  document.getElementById("expense").textContent =
-    "Rs " + expense.toLocaleString();
 
-  document.getElementById("balance").textContent =
-    "Rs " + balance.toLocaleString();
+  document.getElementById(
+    "expense"
+  ).textContent =
+    "Rs " +
+    expense.toLocaleString();
+
+
+  document.getElementById(
+    "balance"
+  ).textContent =
+    "Rs " +
+    balance.toLocaleString();
 
 
   const searchText =
-    document.getElementById("search").value
+    document.getElementById(
+      "search"
+    ).value
       .toLowerCase()
       .trim();
 
 
   const selectedCategory =
-    document.getElementById("filterCategory").value;
+    document.getElementById(
+      "filterCategory"
+    ).value;
 
 
   const filtered =
@@ -620,23 +828,30 @@ function updateScreen() {
 
 
         const matchesSearch =
-          searchable.includes(searchText);
+          searchable.includes(
+            searchText
+          );
 
 
         const matchesCategory =
           selectedCategory === "all" ||
-          transaction.category === selectedCategory;
+          transaction.category ===
+          selectedCategory;
 
 
-        return matchesSearch &&
-               matchesCategory;
+        return (
+          matchesSearch &&
+          matchesCategory
+        );
 
       }
     );
 
 
   const container =
-    document.getElementById("transactions");
+    document.getElementById(
+      "transactions"
+    );
 
 
   if (filtered.length === 0) {
@@ -660,7 +875,9 @@ function updateScreen() {
       transaction => {
 
         const item =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
 
         item.className =
@@ -676,7 +893,8 @@ function updateScreen() {
 
         const note =
           transaction.note
-          ? " • " + transaction.note
+          ? " • " +
+            transaction.note
           : "";
 
 
@@ -685,12 +903,18 @@ function updateScreen() {
           <div>
 
             <strong>
-              ${escapeHTML(transaction.category)}
+              ${escapeHTML(
+                transaction.category
+              )}
             </strong>
 
             <small>
-              ${formatDate(transaction.date)}
+              ${formatDate(
+                transaction.date
+              )}
+
               ${escapeHTML(note)}
+
             </small>
 
           </div>
@@ -733,14 +957,19 @@ function updateScreen() {
 }
 
 
-// Monthly reports
+// ===============================
+// REPORTS
+// ===============================
+
 function updateReports() {
 
   const now =
     new Date();
 
+
   const currentMonth =
     now.getMonth();
+
 
   const currentYear =
     now.getFullYear();
@@ -761,38 +990,51 @@ function updateReports() {
 
       const date =
         new Date(
-          transaction.date + "T00:00:00"
+          transaction.date +
+          "T00:00:00"
         );
 
 
       if (
-        date.getMonth() === currentMonth &&
-        date.getFullYear() === currentYear
+        date.getMonth() ===
+        currentMonth &&
+        date.getFullYear() ===
+        currentYear
       ) {
 
         monthTransactions++;
 
 
-        if (transaction.type === "income") {
+        if (
+          transaction.type ===
+          "income"
+        ) {
 
-          monthIncome += transaction.amount;
+          monthIncome +=
+            transaction.amount;
 
         } else {
 
-          monthExpense += transaction.amount;
+          monthExpense +=
+            transaction.amount;
 
 
           if (
-            !categories[transaction.category]
+            !categories[
+              transaction.category
+            ]
           ) {
 
-            categories[transaction.category] = 0;
+            categories[
+              transaction.category
+            ] = 0;
 
           }
 
 
-          categories[transaction.category] +=
-            transaction.amount;
+          categories[
+            transaction.category
+          ] += transaction.amount;
 
         }
 
@@ -803,25 +1045,29 @@ function updateReports() {
 
 
   const saving =
-    monthIncome - monthExpense;
+    monthIncome -
+    monthExpense;
 
 
   document.getElementById(
     "monthIncome"
   ).textContent =
-    "Rs " + monthIncome.toLocaleString();
+    "Rs " +
+    monthIncome.toLocaleString();
 
 
   document.getElementById(
     "monthExpense"
   ).textContent =
-    "Rs " + monthExpense.toLocaleString();
+    "Rs " +
+    monthExpense.toLocaleString();
 
 
   document.getElementById(
     "monthSaving"
   ).textContent =
-    "Rs " + saving.toLocaleString();
+    "Rs " +
+    saving.toLocaleString();
 
 
   document.getElementById(
@@ -830,7 +1076,6 @@ function updateReports() {
     monthTransactions;
 
 
-  // Category report
   const report =
     document.getElementById(
       "categoryReport"
@@ -844,15 +1089,19 @@ function updateReports() {
       );
 
 
-  if (categoryList.length === 0) {
+  if (
+    categoryList.length === 0
+  ) {
 
     report.innerHTML =
       '<p class="empty">No expense data this month.</p>';
+
 
     document.getElementById(
       "topCategory"
     ).textContent =
       "No expense yet";
+
 
     return;
   }
@@ -865,7 +1114,9 @@ function updateReports() {
     ([category, amount]) => {
 
       const row =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
 
       row.className =
@@ -905,27 +1156,136 @@ function updateReports() {
 }
 
 
-// Security
-function escapeHTML(text) {
+// ===============================
+// ADD SAVINGS GOAL
+// ===============================
 
-  const div =
-    document.createElement("div");
+function addGoal() {
 
-  div.textContent = text;
+  const name =
+    document.getElementById(
+      "goalName"
+    ).value.trim();
 
-  return div.innerHTML;
+
+  const target =
+    Number(
+      document.getElementById(
+        "goalTarget"
+      ).value
+    );
+
+
+  const saved =
+    Number(
+      document.getElementById(
+        "goalSaved"
+      ).value
+    ) || 0;
+
+
+  if (!name) {
+
+    alert("Please enter goal name.");
+
+    return;
+  }
+
+
+  if (!target || target <= 0) {
+
+    alert("Please enter a valid target.");
+
+    return;
+  }
+
+
+  if (saved < 0) {
+
+    alert("Saved amount cannot be negative.");
+
+    return;
+  }
+
+
+  if (saved > target) {
+
+    alert(
+      "Saved amount cannot be greater than target."
+    );
+
+    return;
+  }
+
+
+  savingsGoals.push({
+
+    id: Date.now(),
+
+    name: name,
+
+    target: target,
+
+    saved: saved
+
+  });
+
+
+  saveGoals();
+
+  clearGoalForm();
+
+  renderGoals();
 
 }
 
 
-// Start
-setToday();
+// Clear goal form
+function clearGoalForm() {
 
-updateScreen();
+  document.getElementById(
+    "goalName"
+  ).value = "";
 
-updateReports();
 
-</script>
+  document.getElementById(
+    "goalTarget"
+  ).value = "";
 
-</body>
-  </html>
+
+  document.getElementById(
+    "goalSaved"
+  ).value = "";
+
+}
+
+
+// ===============================
+// ADD MONEY TO GOAL
+// ===============================
+
+function addSaving(id) {
+
+  const goal =
+    savingsGoals.find(
+      item => item.id === id
+    );
+
+
+  if (!goal) return;
+
+
+  const amount =
+    Number(
+      prompt(
+        "How much do you want to add?"
+      )
+    );
+
+
+  if (
+    !amount ||
+    amount <= 0
+  ) {
+
+   
