@@ -1755,6 +1755,22 @@ function updateReports() {
 
 
         if (
+          
+          transaction.type ==
+          "income"
+          ) {
 
-          transaction.type ===
+  monthIncome += transaction.amount;
+
+} else {
+
+  monthExpense += transaction.amount;
+
+  if (!categories[transaction.category]) {
+    categories[transaction.category] = 0;
+  }
+
+  categories[transaction.category] += transaction.amount;
+
+        }
   
