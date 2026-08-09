@@ -9,25 +9,25 @@
 <style>
 *{
   box-sizing:border-box;
-  font-family:Arial,sans-serif;
 }
 
 body{
   margin:0;
+  font-family:Arial,sans-serif;
   background:#f3f7f4;
-  color:#17231b;
+  color:#17221b;
 }
 
 header{
   background:linear-gradient(135deg,#159447,#087535);
   color:white;
-  padding:28px 20px;
+  padding:25px 18px;
   text-align:center;
 }
 
 header h1{
   margin:0 0 6px;
-  font-size:30px;
+  font-size:28px;
 }
 
 header p{
@@ -38,25 +38,35 @@ header p{
 main{
   max-width:700px;
   margin:auto;
-  padding:18px;
+  padding:16px;
 }
 
-.card{
+section{
   background:white;
   border-radius:20px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:0 6px 20px rgba(0,0,0,.07);
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 6px 20px rgba(20,50,30,.08);
 }
 
-.balance{
+h2{
+  margin-top:0;
+  font-size:20px;
+}
+
+.balance-card{
   text-align:center;
 }
 
-.balance h2{
+.balance-card p{
+  color:#718078;
+  margin-bottom:5px;
+}
+
+#balance{
   font-size:34px;
+  margin:8px 0 20px;
   color:#159447;
-  margin:10px 0 20px;
 }
 
 .summary{
@@ -66,28 +76,29 @@ main{
 }
 
 .summary div{
-  background:#f3f8f4;
+  background:#f4f8f5;
   padding:14px;
   border-radius:15px;
 }
 
-.income{
-  color:#159447;
+.summary span{
+  display:block;
+  color:#718078;
+  font-size:13px;
+  margin-bottom:7px;
 }
 
-.expense{
-  color:#e5484d;
+.summary strong{
+  font-size:18px;
 }
 
-h2{
-  margin-top:0;
-}
-
-input,select{
+.form-card input,
+.form-card select,
+.goal-card input{
   width:100%;
   padding:13px;
-  margin:6px 0;
-  border:1px solid #d9e3dc;
+  margin-bottom:10px;
+  border:1px solid #d8e2db;
   border-radius:12px;
   font-size:15px;
   background:white;
@@ -95,9 +106,8 @@ input,select{
 
 button{
   width:100%;
-  border:0;
-  padding:14px;
-  margin-top:8px;
+  border:none;
+  padding:13px;
   border-radius:12px;
   background:#159447;
   color:white;
@@ -114,47 +124,137 @@ button:active{
   background:#777;
 }
 
-.danger{
-  background:#e5484d;
+.report-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
 }
 
-.blue{
-  background:#2878d4;
+.report-box{
+  background:#f4f8f5;
+  border-radius:15px;
+  padding:14px;
 }
 
-.goal{
-  border:1px solid #dfe9e2;
-  border-radius:16px;
-  padding:15px;
-  margin-top:12px;
+.report-box span{
+  display:block;
+  color:#718078;
+  font-size:13px;
+  margin-bottom:7px;
 }
 
-.goal-top{
+.report-box strong{
+  font-size:18px;
+}
+
+#monthIncome{
+  color:#159447;
+}
+
+#monthExpense{
+  color:#e5484d;
+}
+
+#monthSaving{
+  color:#2878d4;
+}
+
+.top-category{
+  background:#eaf8ef;
+  padding:18px;
+  border-radius:15px;
+  text-align:center;
+}
+
+#topCategory{
+  color:#159447;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.category-row{
   display:flex;
   justify-content:space-between;
+  padding:12px 0;
+  border-bottom:1px solid #e3ebe6;
+}
+
+.category-row:last-child{
+  border-bottom:none;
+}
+
+.category-name{
   font-weight:bold;
+}
+
+.category-amount{
+  color:#e5484d;
+  font-weight:bold;
+}
+
+.goal-item{
+  border:1px solid #dfe8e2;
+  background:#fbfdfb;
+  border-radius:17px;
+  padding:15px;
+  margin-bottom:13px;
+}
+
+.goal-header{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+
+.goal-name{
+  font-weight:bold;
+  font-size:17px;
+}
+
+.goal-percent{
+  color:#159447;
+  font-weight:bold;
+}
+
+.goal-money{
+  display:flex;
+  justify-content:space-between;
+  color:#718078;
+  font-size:13px;
+  margin-bottom:9px;
 }
 
 .progress-bg{
   height:11px;
-  background:#e5eee8;
+  background:#e4eee7;
   border-radius:20px;
   overflow:hidden;
-  margin:12px 0;
+  margin-bottom:12px;
 }
 
-.progress{
+.progress-bar{
   height:100%;
-  background:#159447;
+  background:linear-gradient(90deg,#159447,#087535);
+  border-radius:20px;
 }
 
-.goal-buttons{
+.goal-actions{
   display:flex;
   gap:8px;
 }
 
-.goal-buttons button{
+.goal-actions button{
   flex:1;
+}
+
+.add-saving-btn{
+  background:#eaf8ef;
+  color:#159447;
+}
+
+.delete-goal-btn{
+  background:#fff0f0;
+  color:#e5484d;
 }
 
 .transaction{
@@ -162,18 +262,26 @@ button:active{
   justify-content:space-between;
   align-items:center;
   gap:10px;
-  padding:14px 0;
-  border-bottom:1px solid #e8eee9;
+  padding:13px 0;
+  border-bottom:1px solid #e3ebe6;
 }
 
 .transaction:last-child{
-  border-bottom:0;
+  border-bottom:none;
 }
 
 .transaction small{
   display:block;
-  color:#77827b;
-  margin-top:4px;
+  color:#718078;
+  margin-top:5px;
+}
+
+.transaction.income strong{
+  color:#159447;
+}
+
+.transaction.expense strong{
+  color:#e5484d;
 }
 
 .transaction-actions{
@@ -181,46 +289,43 @@ button:active{
   gap:5px;
 }
 
-.transaction-actions button{
+.small-btn{
   width:auto;
   padding:8px 11px;
-  margin:0;
+  font-size:13px;
 }
 
-.report-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
+.edit-btn{
+  background:#eaf4ff;
+  color:#2878d4;
 }
 
-.report-box{
-  background:#f3f8f4;
-  padding:15px;
-  border-radius:14px;
-}
-
-.report-box small{
-  display:block;
-  color:#77827b;
-  margin-bottom:7px;
-}
-
-.category-row{
-  display:flex;
-  justify-content:space-between;
-  padding:11px 0;
-  border-bottom:1px solid #e8eee9;
+.delete-btn{
+  background:#fff0f0;
+  color:#e5484d;
 }
 
 .empty{
   text-align:center;
-  color:#7b857f;
+  color:#718078;
   padding:15px;
 }
 
-@media(max-width:450px){
+@media(max-width:480px){
   main{
-    padding:12px;
+    padding:10px;
+  }
+
+  section{
+    padding:15px;
+  }
+
+  .report-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .transaction{
+    align-items:flex-start;
   }
 }
 </style>
@@ -235,11 +340,8 @@ button:active{
 
 <main>
 
-<!-- ==============================
-     BALANCE
-============================== -->
-
-<section class="card balance">
+<!-- BALANCE -->
+<section class="balance-card">
 
   <p>Total Bachat</p>
 
@@ -248,15 +350,13 @@ button:active{
   <div class="summary">
 
     <div>
-      💰 Income
-      <br>
-      <strong class="income" id="income">Rs 0</strong>
+      <span>💰 Income</span>
+      <strong id="income">Rs 0</strong>
     </div>
 
     <div>
-      💸 Expense
-      <br>
-      <strong class="expense" id="expense">Rs 0</strong>
+      <span>💸 Expense</span>
+      <strong id="expense">Rs 0</strong>
     </div>
 
   </div>
@@ -264,17 +364,21 @@ button:active{
 </section>
 
 
-<!-- ==============================
-     ADD TRANSACTION
-============================== -->
-
-<section class="card">
+<!-- ADD TRANSACTION -->
+<section class="form-card">
 
   <h2 id="formTitle">➕ Add Transaction</h2>
 
   <select id="type">
-    <option value="expense">💸 Expense</option>
-    <option value="income">💰 Income</option>
+
+    <option value="expense">
+      💸 Expense
+    </option>
+
+    <option value="income">
+      💰 Income
+    </option>
+
   </select>
 
   <input
@@ -285,37 +389,46 @@ button:active{
   >
 
   <select id="category">
-    <option>Grocery</option>
-    <option>Electricity</option>
-    <option>Gas</option>
-    <option>Petrol</option>
-    <option>Mobile</option>
-    <option>Education</option>
-    <option>Health</option>
-    <option>Shopping</option>
-    <option>Home</option>
-    <option>Salary</option>
-    <option>Business</option>
-    <option>Other</option>
+
+    <option value="Grocery">🛒 Grocery</option>
+    <option value="Electricity">💡 Electricity</option>
+    <option value="Gas">🔥 Gas</option>
+    <option value="Petrol">⛽ Petrol</option>
+    <option value="Mobile">📱 Mobile / Internet</option>
+    <option value="Education">🎓 Education</option>
+    <option value="Health">🏥 Health</option>
+    <option value="Shopping">🛍️ Shopping</option>
+    <option value="Home">🏠 Home</option>
+    <option value="Salary">💼 Salary</option>
+    <option value="Business">💼 Business</option>
+    <option value="Other">📦 Other</option>
+
   </select>
 
-  <input type="date" id="date">
+  <input
+    type="date"
+    id="date"
+  >
 
   <input
     type="text"
     id="note"
     placeholder="Note (optional)"
+    maxlength="100"
   >
 
-  <button id="saveBtn" onclick="saveTransaction()">
+  <button
+    id="saveButton"
+    onclick="saveTransaction()"
+  >
     Save Transaction
   </button>
 
   <button
-    id="cancelBtn"
+    id="cancelButton"
     class="secondary"
     onclick="cancelEdit()"
-    style="display:none"
+    style="display:none;margin-top:10px;"
   >
     Cancel Edit
   </button>
@@ -323,71 +436,67 @@ button:active{
 </section>
 
 
-<!-- ==============================
-     SEARCH
-============================== -->
+<!-- SEARCH -->
+<section class="form-card">
 
-<section class="card">
-
-  <h2>🔍 Search & Filter</h2>
+  <h2>🔍 Find Transactions</h2>
 
   <input
     type="search"
     id="search"
-    placeholder="Search..."
-    oninput="renderAll()"
+    placeholder="Search transaction..."
+    oninput="updateScreen()"
   >
 
   <select
-    id="filter"
-    onchange="renderAll()"
+    id="filterCategory"
+    onchange="updateScreen()"
   >
+
     <option value="all">📂 All Categories</option>
-    <option>Grocery</option>
-    <option>Electricity</option>
-    <option>Gas</option>
-    <option>Petrol</option>
-    <option>Mobile</option>
-    <option>Education</option>
-    <option>Health</option>
-    <option>Shopping</option>
-    <option>Home</option>
-    <option>Salary</option>
-    <option>Business</option>
-    <option>Other</option>
+    <option value="Grocery">🛒 Grocery</option>
+    <option value="Electricity">💡 Electricity</option>
+    <option value="Gas">🔥 Gas</option>
+    <option value="Petrol">⛽ Petrol</option>
+    <option value="Mobile">📱 Mobile / Internet</option>
+    <option value="Education">🎓 Education</option>
+    <option value="Health">🏥 Health</option>
+    <option value="Shopping">🛍️ Shopping</option>
+    <option value="Home">🏠 Home</option>
+    <option value="Salary">💼 Salary</option>
+    <option value="Business">💼 Business</option>
+    <option value="Other">📦 Other</option>
+
   </select>
 
 </section>
 
 
-<!-- ==============================
-     REPORT
-============================== -->
-
-<section class="card">
+<!-- MONTHLY REPORT -->
+<section>
 
   <h2>📊 Monthly Report</h2>
 
   <div class="report-grid">
 
     <div class="report-box">
-      <small>Monthly Income</small>
-      <strong id="reportIncome">Rs 0</strong>
+      <span>💰 Monthly Income</span>
+      <strong id="monthIncome">Rs 0</strong>
     </div>
 
     <div class="report-box">
-      <small>Monthly Expense</small>
-      <strong id="reportExpense">Rs 0</strong>
+      <span>💸 Monthly Expense</span>
+      <strong id="monthExpense">Rs 0</strong>
     </div>
 
     <div class="report-box">
-      <small>Monthly Bachat</small>
-      <strong id="reportSaving">Rs 0</strong>
+      <span>💵 Monthly Bachat</span>
+      <strong id="monthSaving">Rs 0</strong>
     </div>
 
     <div class="report-box">
-      <small>Transactions</small>
-      <strong id="reportCount">0</strong>
+      <span>📋 Transactions</span>
+      <strong id="monthTransactions">0</strong>
     </div>
 
   </div>
@@ -395,46 +504,40 @@ button:active{
 </section>
 
 
-<!-- ==============================
-     CATEGORY REPORT
-============================== -->
-
-<section class="card">
-<!-- ==============================
-     TOP EXPENSE CATEGORY
-============================== -->
-
-<section class="card">
+<!-- TOP EXPENSE -->
+<section>
 
   <h2>🏆 Top Expense Category</h2>
 
-  <div
-    id="topCategory"
-    style="
-      background:#f3f8f4;
-      padding:16px;
-      border-radius:15px;
-      text-align:center;
-    "
-  >
-    No expense data yet.
+  <div class="top-category">
+
+    <div id="topCategory">
+      No expense data yet.
+    </div>
+
   </div>
 
 </section>
+
+
+<!-- CATEGORY REPORT -->
+<section>
+
   <h2>📂 Expense by Category</h2>
 
   <div id="categoryReport">
-    <p class="empty">No expense data yet.</p>
+
+    <p class="empty">
+      No expense data yet.
+    </p>
+
   </div>
 
 </section>
 
 
-<!-- ==============================
-     SAVINGS GOALS
-============================== -->
-
-<section class="card">
+<!-- SAVINGS GOAL -->
+<section class="goal-card">
 
   <h2>🎯 Savings Goals</h2>
 
@@ -442,6 +545,7 @@ button:active{
     type="text"
     id="goalName"
     placeholder="Goal name e.g. New Mobile"
+    maxlength="50"
   >
 
   <input
@@ -465,31 +569,33 @@ button:active{
 </section>
 
 
-<!-- ==============================
-     MY GOALS
-============================== -->
-
-<section class="card">
+<!-- MY GOALS -->
+<section>
 
   <h2>💰 My Goals</h2>
 
   <div id="goalsList">
-    <p class="empty">No savings goals yet.</p>
+
+    <p class="empty">
+      No savings goals yet.
+    </p>
+
   </div>
 
 </section>
 
 
-<!-- ==============================
-     TRANSACTIONS
-============================== -->
-
-<section class="card">
+<!-- TRANSACTIONS -->
+<section>
 
   <h2>📋 Transactions</h2>
 
   <div id="transactions">
-    <p class="empty">No transactions yet.</p>
+
+    <p class="empty">
+      No transactions yet.
+    </p>
+
   </div>
 
 </section>
@@ -499,9 +605,9 @@ button:active{
 
 <script>
 
-// ========================================
-// DATA
-// ========================================
+/* =========================================
+   DATA
+========================================= */
 
 let transactions =
   JSON.parse(
@@ -516,9 +622,24 @@ let savingsGoals =
 let editingId = null;
 
 
-// ========================================
-// SAVE DATA
-// ========================================
+/* =========================================
+   DATE
+========================================= */
+
+function setToday(){
+
+  const today =
+    new Date().toISOString().split("T")[0];
+
+  document.getElementById("date").value =
+    today;
+
+}
+
+
+/* =========================================
+   SAVE DATA
+========================================= */
 
 function saveData(){
 
@@ -528,7 +649,6 @@ function saveData(){
   );
 
 }
-
 
 function saveGoals(){
 
@@ -540,21 +660,50 @@ function saveGoals(){
 }
 
 
-// ========================================
-// TODAY DATE
-// ========================================
+/* =========================================
+   ESCAPE HTML
+========================================= */
 
-function setToday(){
+function escapeHTML(value){
 
-  document.getElementById("date").value =
-    new Date().toISOString().split("T")[0];
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 
 }
 
 
-// ========================================
-// SAVE TRANSACTION
-// ========================================
+/* =========================================
+   FORMAT DATE
+========================================= */
+
+function formatDate(dateString){
+
+  if(!dateString){
+    return "";
+  }
+
+  const date =
+    new Date(dateString + "T00:00:00");
+
+  return date.toLocaleDateString(
+    "en-GB",
+    {
+      day:"2-digit",
+      month:"short",
+      year:"numeric"
+    }
+  );
+
+}
+
+
+/* =========================================
+   SAVE TRANSACTION
+========================================= */
 
 function saveTransaction(){
 
@@ -576,9 +725,9 @@ function saveTransaction(){
     document.getElementById("note").value.trim();
 
 
-  if(amount <= 0){
+  if(!amount || amount <= 0){
 
-    alert("Please enter amount.");
+    alert("Please enter a valid amount.");
 
     return;
 
@@ -587,7 +736,7 @@ function saveTransaction(){
 
   if(!date){
 
-    alert("Please select date.");
+    alert("Please select a date.");
 
     return;
 
@@ -596,37 +745,39 @@ function saveTransaction(){
 
   if(editingId !== null){
 
-    const item =
+    const transaction =
       transactions.find(
-        t => t.id === editingId
+        function(item){
+          return item.id === editingId;
+        }
       );
 
-    if(item){
 
-      item.type = type;
-      item.amount = amount;
-      item.category = category;
-      item.date = date;
-      item.note = note;
+    if(transaction){
+
+      transaction.type = type;
+      transaction.amount = amount;
+      transaction.category = category;
+      transaction.date = date;
+      transaction.note = note;
 
     }
 
+
     editingId = null;
 
-    document.getElementById(
-      "formTitle"
-    ).textContent =
+    document.getElementById("formTitle")
+      .textContent =
       "➕ Add Transaction";
 
-    document.getElementById(
-      "saveBtn"
-    ).textContent =
+    document.getElementById("saveButton")
+      .textContent =
       "Save Transaction";
 
-    document.getElementById(
-      "cancelBtn"
-    ).style.display =
+    document.getElementById("cancelButton")
+      .style.display =
       "none";
+
 
   }else{
 
@@ -653,70 +804,61 @@ function saveTransaction(){
 
   clearForm();
 
-  renderAll();
+  updateAll();
 
 }
 
 
-// ========================================
-// CLEAR FORM
-// ========================================
-
-function clearForm(){
-
-  document.getElementById("amount").value = "";
-
-  document.getElementById("note").value = "";
-
-  document.getElementById("type").value = "expense";
-
-  document.getElementById("category").value = "Grocery";
-
-  setToday();
-
-}
-
-
-// ========================================
-// EDIT TRANSACTION
-// ========================================
+/* =========================================
+   EDIT TRANSACTION
+========================================= */
 
 function editTransaction(id){
 
-  const item =
+  const transaction =
     transactions.find(
-      t => t.id === id
+      function(item){
+        return item.id === id;
+      }
     );
 
-  if(!item) return;
+
+  if(!transaction){
+    return;
+  }
 
 
   editingId = id;
 
 
   document.getElementById("type").value =
-    item.type;
+    transaction.type;
 
   document.getElementById("amount").value =
-    item.amount;
+    transaction.amount;
 
   document.getElementById("category").value =
-    item.category;
+    transaction.category;
 
   document.getElementById("date").value =
-    item.date;
+    transaction.date;
 
   document.getElementById("note").value =
-    item.note || "";
+    transaction.note || "";
 
 
-  document.getElementById("formTitle").textContent =
+  document.getElementById("formTitle")
+    .textContent =
     "✏️ Edit Transaction";
 
-  document.getElementById("saveBtn").textContent =
+
+  document.getElementById("saveButton")
+    .textContent =
     "Update Transaction";
 
-  document.getElementById("cancelBtn").style.display =
+
+  document.getElementById("cancelButton")
+    .style.display =
     "block";
 
 
@@ -728,21 +870,24 @@ function editTransaction(id){
 }
 
 
-// ========================================
-// CANCEL EDIT
-// ========================================
+/* =========================================
+   CANCEL EDIT
+========================================= */
 
 function cancelEdit(){
 
   editingId = null;
 
-  document.getElementById("formTitle").textContent =
+  document.getElementById("formTitle")
+    .textContent =
     "➕ Add Transaction";
 
-  document.getElementById("saveBtn").textContent =
+  document.getElementById("saveButton")
+    .textContent =
     "Save Transaction";
 
-  document.getElementById("cancelBtn").style.display =
+  document.getElementById("cancelButton")
+    .style.display =
     "none";
 
   clearForm();
@@ -750,518 +895,384 @@ function cancelEdit(){
 }
 
 
-// ========================================
-// DELETE TRANSACTION
-// ========================================
+/* =========================================
+   CLEAR FORM
+========================================= */
+
+function clearForm(){
+
+  document.getElementById("amount").value =
+    "";
+
+  document.getElementById("note").value =
+    "";
+
+  document.getElementById("type").value =
+    "expense";
+
+  document.getElementById("category").value =
+    "Grocery";
+
+  setToday();
+
+}
+
+
+/* =========================================
+   DELETE TRANSACTION
+========================================= */
 
 function deleteTransaction(id){
 
-  if(!confirm("Delete this transaction?"))
+  if(
+    !confirm("Delete this transaction?")
+  ){
     return;
+  }
+
 
   transactions =
     transactions.filter(
-      t => t.id !== id
+      function(item){
+        return item.id !== id;
+      }
     );
+
 
   saveData();
 
-  renderAll();
+  updateAll();
 
 }
 
 
-// ========================================
-// ADD SAVINGS GOAL
-// ========================================
-
-function addGoal(){
-
-  const name =
-    document.getElementById("goalName").value.trim();
-
-  const target =
-    Number(
-      document.getElementById("goalTarget").value
-    );
-
-  const saved =
-    Number(
-      document.getElementById("goalSaved").value
-    ) || 0;
-
-
-  if(!name){
-
-    alert("Please enter goal name.");
-
-    return;
-
-  }
-
-
-  if(target <= 0){
-
-    alert("Please enter target amount.");
-
-    return;
-
-  }
-
-
-  if(saved < 0 || saved > target){
-
-    alert(
-      "Saved amount cannot be greater than target."
-    );
-
-    return;
-
-  }
-
-
-  savingsGoals.push({
-
-    id:Date.now(),
-
-    name:name,
-
-    target:target,
-
-    saved:saved
-
-  });
-
-
-  saveGoals();
-
-
-  document.getElementById("goalName").value = "";
-
-  document.getElementById("goalTarget").value = "";
-
-  document.getElementById("goalSaved").value = "";
-
-
-  renderGoals();
-
-
-  alert("🎯 Savings Goal Created!");
-
-}
-
-
-// ========================================
-// ADD SAVING
-// ========================================
-
-function addSaving(id){
-
-  const goal =
-    savingsGoals.find(
-      g => g.id === id
-    );
-
-  if(!goal) return;
-
-
-  const amount =
-    Number(
-      prompt("How much do you want to add?")
-    );
-
-
-  if(amount <= 0 || isNaN(amount))
-    return;
-
-
-  goal.saved =
-    Math.min(
-      goal.saved + amount,
-      goal.target
-    );
-
-
-  saveGoals();
-
-  renderGoals();
-
-}
-
-
-// ========================================
-// DELETE GOAL
-// ========================================
-
-function deleteGoal(id){
-
-  if(!confirm("Delete this goal?"))
-    return;
-
-
-  savingsGoals =
-    savingsGoals.filter(
-      g => g.id !== id
-    );
-
-
-  saveGoals();
-
-  renderGoals();
-
-}
-
-
-// ========================================
-// RENDER GOALS
-// ========================================
-
-function renderGoals(){
-
-  const box =
-    document.getElementById("goalsList");
-
-
-  if(savingsGoals.length === 0){
-
-    box.innerHTML =
-      '<p class="empty">No savings goals yet.</p>';
-
-    return;
-
-  }
-
-
-  box.innerHTML = "";
-
-
-  savingsGoals.forEach(goal => {
-
-    const percent =
-      Math.min(
-        100,
-        Math.round(
-          goal.saved / goal.target * 100
-        )
-      );
-
-
-    const remaining =
-      Math.max(
-        0,
-        goal.target - goal.saved
-      );
-
-
-    const div =
-      document.createElement("div");
-
-
-    div.className = "goal";
-
-
-    div.innerHTML = `
-
-      <div class="goal-top">
-
-        <span>🎯 ${escapeHTML(goal.name)}</span>
-
-        <span>${percent}%</span>
-
-      </div>
-
-
-      <div class="progress-bg">
-
-        <div
-          class="progress"
-          style="width:${percent}%"
-        ></div>
-
-      </div>
-
-
-      <div>
-
-        Saved:
-        Rs ${goal.saved.toLocaleString()}
-
-        /
-        Rs ${goal.target.toLocaleString()}
-
-      </div>
-
-
-      <p>
-
-        Remaining:
-        <strong>
-          Rs ${remaining.toLocaleString()}
-        </strong>
-
-      </p>
-
-
-      ${
-        remaining === 0
-        ?
-        "<strong class='income'>🎉 Goal Completed!</strong>"
-        :
-        ""
-      }
-
-
-      <div class="goal-buttons">
-
-        <button
-          onclick="addSaving(${goal.id})"
-        >
-          ➕ Add Saving
-        </button>
-
-
-        <button
-          class="danger"
-          onclick="deleteGoal(${goal.id})"
-        >
-          🗑️ Delete
-        </button>
-
-      </div>
-
-    `;
-
-
-    box.appendChild(div);
-
-  });
-
-}
-
-
-// ========================================
-// RENDER TRANSACTIONS + BALANCE
-// ========================================
-
-function renderAll(){
+/* =========================================
+   UPDATE SCREEN
+========================================= */
+
+function updateScreen(){
 
   let income = 0;
-
   let expense = 0;
 
 
-  transactions.forEach(t => {
+  transactions.forEach(
+    function(transaction){
 
-    if(t.type === "income"){
+      if(transaction.type === "income"){
 
-      income += t.amount;
+        income += Number(transaction.amount);
 
-    }else{
+      }else{
 
-      expense += t.amount;
+        expense += Number(transaction.amount);
+
+      }
 
     }
-
-  });
+  );
 
 
   const balance =
     income - expense;
 
 
-  document.getElementById("income").textContent =
+  document.getElementById("income")
+    .textContent =
     "Rs " + income.toLocaleString();
 
-  document.getElementById("expense").textContent =
+
+  document.getElementById("expense")
+    .textContent =
     "Rs " + expense.toLocaleString();
 
-  document.getElementById("balance").textContent =
+
+  document.getElementById("balance")
+    .textContent =
     "Rs " + balance.toLocaleString();
 
 
-  // SEARCH
-
-  const search =
+  const searchText =
     document.getElementById("search")
       .value
       .toLowerCase()
       .trim();
 
 
-  const filter =
-    document.getElementById("filter").value;
+  const selectedCategory =
+    document.getElementById("filterCategory")
+      .value;
 
 
   const filtered =
-    transactions.filter(t => {
+    transactions.filter(
+      function(transaction){
 
-      const text =
-        (
-          t.category +
-          " " +
-          (t.note || "") +
-          " " +
-          t.type
-        ).toLowerCase();
-
-
-      const searchOK =
-        text.includes(search);
+        const searchable =
+          (
+            transaction.category +
+            " " +
+            (transaction.note || "") +
+            " " +
+            transaction.type
+          ).toLowerCase();
 
 
-      const filterOK =
-        filter === "all" ||
-        t.category === filter;
+        const matchesSearch =
+          searchable.includes(searchText);
 
 
-      return searchOK && filterOK;
+        const matchesCategory =
+          selectedCategory === "all" ||
+          transaction.category === selectedCategory;
 
-    });
+
+        return (
+          matchesSearch &&
+          matchesCategory
+        );
+
+      }
+    );
 
 
-  const box =
+  const container =
     document.getElementById("transactions");
 
 
   if(filtered.length === 0){
 
-    box.innerHTML =
-      '<p class="empty">No transactions found.</p>';
+    container.innerHTML =
+      '<p class="empty">No matching transactions.</p>';
 
-  }else{
+    return;
 
-    box.innerHTML = "";
+  }
 
 
-    filtered
-      .slice()
-      .sort(
-        (a,b) => b.id - a.id
-      )
-      .forEach(t => {
+  container.innerHTML = "";
 
-        const div =
+
+  filtered
+    .slice()
+    .sort(
+      function(a,b){
+        return b.id - a.id;
+      }
+    )
+    .forEach(
+      function(transaction){
+
+        const item =
           document.createElement("div");
 
-        div.className =
-          "transaction";
+
+        item.className =
+          "transaction " +
+          transaction.type;
 
 
         const sign =
-          t.type === "income"
+          transaction.type === "income"
           ? "+"
           : "-";
 
 
-        div.innerHTML = `
+        const note =
+          transaction.note
+          ? " • " + transaction.note
+          : "";
+
+
+        item.innerHTML = `
 
           <div>
 
             <strong>
-              ${escapeHTML(t.category)}
+              ${escapeHTML(transaction.category)}
             </strong>
 
             <small>
-              ${escapeHTML(t.date)}
-              ${t.note
-                ? " • " + escapeHTML(t.note)
-                : ""}
+              ${formatDate(transaction.date)}
+              ${escapeHTML(note)}
             </small>
 
           </div>
 
+          <div class="transaction-actions">
 
-          <div>
-
-            <strong class="${
-              t.type === "income"
-              ? "income"
-              : "expense"
-            }">
-
-              ${sign}
-              Rs ${t.amount.toLocaleString()}
-
+            <strong>
+              ${sign} Rs
+              ${Number(transaction.amount).toLocaleString()}
             </strong>
 
+            <button
+              class="small-btn edit-btn"
+              onclick="editTransaction(${transaction.id})"
+            >
+              ✏️
+            </button>
 
-            <div class="transaction-actions">
-
-              <button
-                class="blue"
-                onclick="editTransaction(${t.id})"
-              >
-                ✏️
-              </button>
-
-
-              <button
-                class="danger"
-                onclick="deleteTransaction(${t.id})"
-              >
-                🗑️
-              </button>
-
-            </div>
+            <button
+              class="small-btn delete-btn"
+              onclick="deleteTransaction(${transaction.id})"
+            >
+              ×
+            </button>
 
           </div>
 
         `;
 
 
-        box.appendChild(div);
+        container.appendChild(item);
 
-      });
-
-  }
-
-
-  renderReport();
+      }
+    );
 
 }
 
 
-// ========================================
-// REPORT
-// ========================================
+/* =========================================
+   MONTHLY REPORT
+========================================= */
 
-function renderTopCategory(){
+function updateMonthlyReport(){
 
   const now = new Date();
 
-  const month = now.getMonth();
-  const year = now.getFullYear();
+  const currentMonth =
+    now.getMonth();
+
+  const currentYear =
+    now.getFullYear();
+
+
+  let monthIncome = 0;
+  let monthExpense = 0;
+  let monthTransactions = 0;
+
+
+  transactions.forEach(
+    function(transaction){
+
+      const date =
+        new Date(
+          transaction.date + "T00:00:00"
+        );
+
+
+      if(
+        date.getMonth() === currentMonth &&
+        date.getFullYear() === currentYear
+      ){
+
+        monthTransactions++;
+
+
+        if(transaction.type === "income"){
+
+          monthIncome +=
+            Number(transaction.amount);
+
+        }else{
+
+          monthExpense +=
+            Number(transaction.amount);
+
+        }
+
+      }
+
+    }
+  );
+
+
+  const saving =
+    monthIncome - monthExpense;
+
+
+  document.getElementById("monthIncome")
+    .textContent =
+    "Rs " + monthIncome.toLocaleString();
+
+
+  document.getElementById("monthExpense")
+    .textContent =
+    "Rs " + monthExpense.toLocaleString();
+
+
+  document.getElementById("monthSaving")
+    .textContent =
+    "Rs " + saving.toLocaleString();
+
+
+  document.getElementById("monthTransactions")
+    .textContent =
+    monthTransactions;
+
+}
+
+
+/* =========================================
+   TOP EXPENSE CATEGORY
+========================================= */
+
+function updateTopCategory(){
+
+  const now = new Date();
+
+  const currentMonth =
+    now.getMonth();
+
+  const currentYear =
+    now.getFullYear();
+
 
   const categories = {};
 
-  transactions.forEach(function(t){
 
-    const d = new Date(
-      t.date + "T00:00:00"
-    );
+  transactions.forEach(
+    function(transaction){
 
-    if(
-      t.type === "expense" &&
-      d.getMonth() === month &&
-      d.getFullYear() === year
-    ){
+      const date =
+        new Date(
+          transaction.date + "T00:00:00"
+        );
 
-      if(!categories[t.category]){
-        categories[t.category] = 0;
+
+      if(
+        transaction.type === "expense" &&
+        date.getMonth() === currentMonth &&
+        date.getFullYear() === currentYear
+      ){
+
+        if(
+          !categories[transaction.category]
+        ){
+
+          categories[transaction.category] =
+            0;
+
+        }
+
+
+        categories[transaction.category] +=
+          Number(transaction.amount);
+
       }
 
-      categories[t.category] += t.amount;
-
     }
-
-  });
+  );
 
 
   const list =
     Object.entries(categories)
-      .sort(function(a,b){
-        return b[1] - a[1];
-      });
+      .sort(
+        function(a,b){
+          return b[1] - a[1];
+        }
+      );
 
 
   const box =
@@ -1278,176 +1289,38 @@ function renderTopCategory(){
   }
 
 
-  const topName = list[0][0];
-  const topAmount = list[0][1];
+  const topName =
+    list[0][0];
+
+  const topAmount =
+    list[0][1];
 
 
   box.innerHTML =
-    "🏆 <strong>" +
+    "🏆 " +
     escapeHTML(topName) +
-    "</strong>" +
-    "<br><br>" +
-    "Rs " +
+    "<br><br>Rs " +
     topAmount.toLocaleString();
 
-  }
-  const now =
-    new Date();
+}
 
 
-  const month =
+/* =========================================
+   CATEGORY REPORT
+========================================= */
+
+function updateCategoryReport(){
+
+  const now = new Date();
+
+  const currentMonth =
     now.getMonth();
 
-  const year =
+  const currentYear =
     now.getFullYear();
 
-
-  let income = 0;
-
-  let expense = 0;
-
-  let count = 0;
 
   const categories = {};
 
 
-  transactions.forEach(t => {
-
-    const d =
-      new Date(
-        t.date + "T00:00:00"
-      );
-
-
-    if(
-      d.getMonth() === month &&
-      d.getFullYear() === year
-    ){
-
-      count++;
-
-
-      if(t.type === "income"){
-
-        income += t.amount;
-
-      }else{
-
-        expense += t.amount;
-
-
-        if(!categories[t.category])
-          categories[t.category] = 0;
-
-
-        categories[t.category] +=
-          t.amount;
-
-      }
-
-    }
-
-  });
-
-
-  document.getElementById("reportIncome").textContent =
-    "Rs " + income.toLocaleString();
-
-
-  document.getElementById("reportExpense").textContent =
-    "Rs " + expense.toLocaleString();
-
-
-  document.getElementById("reportSaving").textContent =
-    "Rs " + (income-expense).toLocaleString();
-
-
-  document.getElementById("reportCount").textContent =
-    count;
-
-
-  const report =
-    document.getElementById("categoryReport");
-
-
-  const list =
-    Object.entries(categories)
-      .sort(
-        (a,b) => b[1] - a[1]
-      );
-
-
-  if(list.length === 0){
-
-    report.innerHTML =
-      '<p class="empty">No expense data this month.</p>';
-
-    return;
-
-  }
-
-
-  report.innerHTML = "";
-
-
-  list.forEach(([name,amount]) => {
-
-    const row =
-      document.createElement("div");
-
-
-    row.className =
-      "category-row";
-
-
-    row.innerHTML = `
-
-      <span>
-        ${escapeHTML(name)}
-      </span>
-
-      <strong class="expense">
-        Rs ${amount.toLocaleString()}
-      </strong>
-
-    `;
-
-
-    report.appendChild(row);
-
-  });
-
-}
-
-
-// ========================================
-// SECURITY
-// ========================================
-
-function escapeHTML(text){
-
-  const div =
-    document.createElement("div");
-
-  div.textContent =
-    text;
-
-  return div.innerHTML;
-
-}
-
-
-// ========================================
-// START APP
-// ========================================
-
-setToday();
-
-renderAll();
-
-renderGoals();
-
-</script>
-
-</body>
-</html>
+  transactions.forEach
