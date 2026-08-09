@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#159447">
-
   <title>Bachat Pro</title>
-
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -22,11 +20,9 @@
   <!-- Balance -->
   <section class="balance-card">
     <p>Total Bachat</p>
-
     <h2 id="balance">Rs 0</h2>
 
     <div class="summary">
-
       <div>
         <span>💰 Income</span>
         <strong id="income">Rs 0</strong>
@@ -36,92 +32,96 @@
         <span>💸 Expense</span>
         <strong id="expense">Rs 0</strong>
       </div>
-
     </div>
   </section>
 
 
-  <!-- Add Transaction -->
+  <!-- Add / Edit Transaction -->
   <section class="form-card">
 
-    <h2>➕ Add Transaction</h2>
-
-    <!-- Type -->
-    <label>Transaction Type</label>
+    <h2 id="formTitle">➕ Add Transaction</h2>
 
     <select id="type">
       <option value="expense">💸 Expense</option>
       <option value="income">💰 Income</option>
     </select>
 
-
-    <!-- Amount -->
-    <label>Amount</label>
-
     <input
       type="number"
       id="amount"
-      placeholder="Enter amount in Rs"
+      placeholder="Amount (Rs)"
       min="1"
     >
 
-
-    <!-- Category -->
-    <label>Category</label>
-
     <select id="category">
-
       <option value="Grocery">🛒 Grocery</option>
-
       <option value="Electricity">💡 Electricity</option>
-
       <option value="Gas">🔥 Gas</option>
-
       <option value="Petrol">⛽ Petrol</option>
-
       <option value="Mobile">📱 Mobile / Internet</option>
-
       <option value="Education">🎓 Education</option>
-
       <option value="Health">🏥 Health</option>
-
       <option value="Shopping">🛍️ Shopping</option>
-
       <option value="Home">🏠 Home</option>
-
       <option value="Salary">💼 Salary</option>
-
       <option value="Business">💼 Business</option>
-
       <option value="Other">📦 Other</option>
-
     </select>
 
-
-    <!-- Date -->
-    <label>Date</label>
-
-    <input
-      type="date"
-      id="date"
-    >
-
-
-    <!-- Note -->
-    <label>Note</label>
+    <input type="date" id="date">
 
     <input
       type="text"
       id="note"
-      placeholder="Optional note"
+      placeholder="Note (optional)"
       maxlength="100"
     >
 
-
-    <!-- Save -->
-    <button onclick="addTransaction()">
+    <button onclick="saveTransaction()" id="saveButton">
       Save Transaction
     </button>
+
+    <button
+      onclick="cancelEdit()"
+      id="cancelButton"
+      style="display:none; margin-top:10px; background:#777;"
+    >
+      Cancel Edit
+    </button>
+
+  </section>
+
+
+  <!-- Search & Filter -->
+  <section class="form-card">
+
+    <h2>🔍 Find Transactions</h2>
+
+    <input
+      type="search"
+      id="search"
+      placeholder="Search transaction..."
+      oninput="updateScreen()"
+    >
+
+    <select id="filterCategory" onchange="updateScreen()">
+
+      <option value="all">📂 All Categories</option>
+
+      <option value="Grocery">🛒 Grocery</option>
+      <option value="Electricity">💡 Electricity</option>
+      <option value="Gas">🔥 Gas</option>
+      <option value="Petrol">⛽ Petrol</option>
+      <option value="Mobile">📱 Mobile / Internet</option>
+      <option value="Education">🎓 Education</option>
+      <option value="Health">🏥 Health</option>
+      <option value="Shopping">🛍️ Shopping</option>
+      <option value="Home">🏠 Home</option>
+      <option value="Salary">💼 Salary</option>
+      <option value="Business">💼 Business</option>
+      <option value="Other">📦 Other</option>
+
+    </select>
 
   </section>
 
@@ -129,14 +129,10 @@
   <!-- Transactions -->
   <section class="transactions-card">
 
-    <h2>📋 Recent Transactions</h2>
+    <h2>📋 Transactions</h2>
 
     <div id="transactions">
-
-      <p class="empty">
-        No transactions yet.
-      </p>
-
+      <p class="empty">No transactions yet.</p>
     </div>
 
   </section>
@@ -151,8 +147,10 @@ let transactions =
     localStorage.getItem("bachatTransactions")
   ) || [];
 
+let editingId = null;
 
-// Set today's date
+
+// Today's date
 function setToday() {
 
   const today =
@@ -172,8 +170,8 @@ function saveData() {
 }
 
 
-// Add transaction
-function addTransaction() {
+// Save new transaction OR edited transaction
+function saveTransaction() {
 
   const type =
     document.getElementById("type").value;
@@ -193,7 +191,6 @@ function addTransaction() {
     document.getElementById("note").value.trim();
 
 
-  // Validation
   if (!amount || amount <= 0) {
 
     alert("Please enter a valid amount.");
@@ -210,58 +207,170 @@ function addTransaction() {
   }
 
 
-  // Create transaction
-  const transaction = {
+  // EDIT MODE
+  if (editingId !== null) {
 
-    id: Date.now(),
-
-    type: type,
-
-    amount: amount,
-
-    category: category,
-
-    date: date,
-
-    note: note
-
-  };
+    const transaction =
+      transactions.find(
+        function(item) {
+          return item.id === editingId;
+        }
+      );
 
 
-  transactions.push(transaction);
+    if (transaction) {
+
+      transaction.type = type;
+      transaction.amount = amount;
+      transaction.category = category;
+      transaction.date = date;
+      transaction.note = note;
+
+    }
+
+
+    editingId = null;
+
+    document.getElementById("formTitle").textContent =
+      "➕ Add Transaction";
+
+    document.getElementById("saveButton").textContent =
+      "Save Transaction";
+
+    document.getElementById("cancelButton").style.display =
+      "none";
+
+
+  } else {
+
+    // NEW TRANSACTION
+
+    transactions.push({
+
+      id: Date.now(),
+
+      type: type,
+
+      amount: amount,
+
+      category: category,
+
+      date: date,
+
+      note: note
+
+    });
+
+  }
 
 
   saveData();
 
+  clearForm();
 
-  // Clear form
-  document.getElementById("amount").value = "";
-
-  document.getElementById("note").value = "";
-
-
-  // Update
   updateScreen();
 }
 
 
-// Delete transaction
+// Start editing
+function editTransaction(id) {
+
+  const transaction =
+    transactions.find(
+      function(item) {
+        return item.id === id;
+      }
+    );
+
+
+  if (!transaction) {
+    return;
+  }
+
+
+  editingId = id;
+
+
+  document.getElementById("type").value =
+    transaction.type;
+
+  document.getElementById("amount").value =
+    transaction.amount;
+
+  document.getElementById("category").value =
+    transaction.category;
+
+  document.getElementById("date").value =
+    transaction.date;
+
+  document.getElementById("note").value =
+    transaction.note || "";
+
+
+  document.getElementById("formTitle").textContent =
+    "✏️ Edit Transaction";
+
+  document.getElementById("saveButton").textContent =
+    "Update Transaction";
+
+  document.getElementById("cancelButton").style.display =
+    "block";
+
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+
+// Cancel editing
+function cancelEdit() {
+
+  editingId = null;
+
+  document.getElementById("formTitle").textContent =
+    "➕ Add Transaction";
+
+  document.getElementById("saveButton").textContent =
+    "Save Transaction";
+
+  document.getElementById("cancelButton").style.display =
+    "none";
+
+  clearForm();
+}
+
+
+// Clear form
+function clearForm() {
+
+  document.getElementById("amount").value = "";
+
+  document.getElementById("note").value = "";
+
+  document.getElementById("type").value =
+    "expense";
+
+  document.getElementById("category").value =
+    "Grocery";
+
+  setToday();
+}
+
+
+// Delete
 function deleteTransaction(id) {
 
-  const confirmDelete =
-    confirm("Delete this transaction?");
-
-  if (!confirmDelete) {
+  if (!confirm("Delete this transaction?")) {
     return;
   }
 
 
   transactions =
     transactions.filter(
-      function(transaction) {
-
-        return transaction.id !== id;
-
+      function(item) {
+        return item.id !== id;
       }
     );
 
@@ -293,7 +402,6 @@ function formatDate(dateString) {
 function updateScreen() {
 
   let income = 0;
-
   let expense = 0;
 
 
@@ -301,13 +409,9 @@ function updateScreen() {
     function(transaction) {
 
       if (transaction.type === "income") {
-
         income += transaction.amount;
-
       } else {
-
         expense += transaction.amount;
-
       }
 
     }
@@ -318,36 +422,63 @@ function updateScreen() {
     income - expense;
 
 
-  // Update totals
-  document.getElementById(
-    "income"
-  ).textContent =
+  document.getElementById("income").textContent =
     "Rs " + income.toLocaleString();
 
-
-  document.getElementById(
-    "expense"
-  ).textContent =
+  document.getElementById("expense").textContent =
     "Rs " + expense.toLocaleString();
 
-
-  document.getElementById(
-    "balance"
-  ).textContent =
+  document.getElementById("balance").textContent =
     "Rs " + balance.toLocaleString();
 
 
-  // Transaction container
-  const container =
-    document.getElementById(
-      "transactions"
+  const searchText =
+    document.getElementById("search").value
+      .toLowerCase()
+      .trim();
+
+
+  const selectedCategory =
+    document.getElementById("filterCategory").value;
+
+
+  const filtered =
+    transactions.filter(
+      function(transaction) {
+
+        const searchable =
+          (
+            transaction.category +
+            " " +
+            (transaction.note || "") +
+            " " +
+            transaction.type
+          ).toLowerCase();
+
+
+        const matchesSearch =
+          searchable.includes(searchText);
+
+
+        const matchesCategory =
+          selectedCategory === "all" ||
+          transaction.category === selectedCategory;
+
+
+        return matchesSearch && matchesCategory;
+
+      }
     );
 
 
-  if (transactions.length === 0) {
+  const container =
+    document.getElementById("transactions");
+
+
+  if (filtered.length === 0) {
 
     container.innerHTML =
-      '<p class="empty">No transactions yet.</p>';
+      '<p class="empty">No matching transactions.</p>';
 
     return;
   }
@@ -356,83 +487,90 @@ function updateScreen() {
   container.innerHTML = "";
 
 
-  // Newest first
-  const sorted =
-    [...transactions].sort(
+  filtered
+    .slice()
+    .sort(
       function(a, b) {
-
         return b.id - a.id;
+      }
+    )
+    .forEach(
+      function(transaction) {
+
+        const item =
+          document.createElement("div");
+
+
+        item.className =
+          "transaction " +
+          transaction.type;
+
+
+        const sign =
+          transaction.type === "income"
+            ? "+"
+            : "-";
+
+
+        const note =
+          transaction.note
+            ? " • " + transaction.note
+            : "";
+
+
+        item.innerHTML = `
+
+          <div>
+
+            <strong>
+              ${escapeHTML(transaction.category)}
+            </strong>
+
+            <small>
+              ${formatDate(transaction.date)}
+              ${escapeHTML(note)}
+            </small>
+
+          </div>
+
+
+          <div>
+
+            <strong>
+              ${sign} Rs ${transaction.amount.toLocaleString()}
+            </strong>
+
+
+            <button
+              class="delete-btn"
+              onclick="editTransaction(${transaction.id})"
+              title="Edit"
+              style="
+                background:#eaf4ff;
+                color:#2878d4;
+              "
+            >
+              ✏️
+            </button>
+
+
+            <button
+              class="delete-btn"
+              onclick="deleteTransaction(${transaction.id})"
+              title="Delete"
+            >
+              ×
+            </button>
+
+          </div>
+
+        `;
+
+
+        container.appendChild(item);
 
       }
     );
-
-
-  sorted.forEach(
-    function(transaction) {
-
-      const item =
-        document.createElement("div");
-
-
-      item.className =
-        "transaction " +
-        transaction.type;
-
-
-      const sign =
-        transaction.type === "income"
-        ? "+"
-        : "-";
-
-
-      const noteText =
-        transaction.note
-        ? " • " + transaction.note
-        : "";
-
-
-      item.innerHTML = `
-
-        <div>
-
-          <strong>
-            ${escapeHTML(transaction.category)}
-          </strong>
-
-          <small>
-            ${formatDate(transaction.date)}
-            ${noteText}
-          </small>
-
-        </div>
-
-
-        <div>
-
-          <strong>
-
-            ${sign}
-            Rs ${transaction.amount.toLocaleString()}
-
-          </strong>
-
-
-          <button
-            class="delete-btn"
-            onclick="deleteTransaction(${transaction.id})"
-          >
-            ×
-          </button>
-
-        </div>
-
-      `;
-
-
-      container.appendChild(item);
-
-    }
-  );
 }
 
 
@@ -448,7 +586,7 @@ function escapeHTML(text) {
 }
 
 
-// Start app
+// Start
 setToday();
 
 updateScreen();
