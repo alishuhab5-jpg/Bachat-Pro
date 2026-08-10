@@ -394,7 +394,32 @@ button:active{
 
 </section>
 
+  
+<!-- ==============================
+     TOP EXPENSE CATEGORY
+============================== -->
 
+<section class="card">
+
+  <h2>🏆 Top Expense Category</h2>
+
+  <div
+    id="topCategory"
+    style="
+      background:#eaf8ef;
+      padding:18px;
+      border-radius:15px;
+      text-align:center;
+    "
+  >
+    <strong style="color:#159447;font-size:20px;">
+      No expense data this month.
+    </strong>
+  </div>
+
+</section>
+
+  
 <!-- ==============================
      CATEGORY REPORT
 ============================== -->
@@ -1332,7 +1357,54 @@ function renderReport(){
     report.appendChild(row);
 
   });
+const topCategory =
+  document.getElementById("topCategory");
 
+if(list.length === 0){
+
+  topCategory.innerHTML =
+    `<strong style="color:#159447;font-size:20px;">
+      No expense data this month.
+    </strong>`;
+
+}else{
+
+  const topName = list[0][0];
+  const topAmount = list[0][1];
+
+  topCategory.innerHTML = `
+    <span
+      style="
+        display:block;
+        color:#77827b;
+        font-size:13px;
+        margin-bottom:6px;
+      "
+    >
+      Highest spending
+    </span>
+
+    <strong
+      style="
+        color:#159447;
+        font-size:20px;
+      "
+    >
+      ${escapeHTML(topName)}
+    </strong>
+
+    <div
+      style="
+        margin-top:6px;
+        color:#e5484d;
+        font-weight:bold;
+      "
+    >
+      Rs ${topAmount.toLocaleString()}
+    </div>
+  `;
+
+  }
 }
 
 
