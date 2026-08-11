@@ -49,3 +49,78 @@
   </button>
 
 </section>
+
+</main>
+
+<script>
+
+function goHome(){
+
+  window.location.href = "index.html";
+
+}
+
+let businessTransactions =
+  JSON.parse(
+    localStorage.getItem("bachatBusinessTransactions")
+  ) || [];
+
+function saveBusinessTransaction(){
+
+  const type =
+    document.getElementById("businessType").value;
+
+  const amount =
+    Number(
+      document.getElementById("businessAmount").value
+    );
+
+  const date =
+    document.getElementById("businessDate").value;
+
+  const note =
+    document.getElementById("businessNote").value.trim();
+
+  if(amount <= 0){
+
+    alert("Please enter amount.");
+
+    return;
+
+  }
+
+  if(!date){
+
+    alert("Please select date.");
+
+    return;
+
+  }
+
+  businessTransactions.push({
+
+    id: Date.now(),
+    type: type,
+    amount: amount,
+    date: date,
+    note: note
+
+  });
+
+  localStorage.setItem(
+    "bachatBusinessTransactions",
+    JSON.stringify(businessTransactions)
+  );
+
+  document.getElementById("businessAmount").value = "";
+
+  document.getElementById("businessNote").value = "";
+
+  alert("✅ Business transaction saved!");
+
+}
+
+</script>
+
+</body>
+</html>
