@@ -1,241 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-<meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
-
-<meta
-  name="theme-color"
-  content="#159447"
->
-
-<title>Bachat Pro - Business Manager</title>
-
-<style>
-
-*{
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
-}
-
-body{
-  margin:0;
-  background:#f3f7f4;
-  color:#17231b;
-}
-
-header{
-  background:linear-gradient(135deg,#159447,#087535);
-  color:white;
-  padding:28px 20px;
-  text-align:center;
-}
-
-header h1{
-  margin:0 0 6px;
-  font-size:28px;
-}
+<!-- ==============================
+     ADD BUSINESS TRANSACTION
+============================== -->
 
-header p{
-  margin:0;
-  opacity:.9;
-}
+<section class="card">
 
-main{
-  max-width:700px;
-  margin:auto;
-  padding:18px;
-}
+  <h2>➕ Add Business Transaction</h2>
 
-.card{
-  background:white;
-  border-radius:20px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:0 6px 20px rgba(0,0,0,.07);
-}
+  <select id="businessType">
 
-button{
-  width:100%;
-  border:0;
-  padding:14px;
-  margin-top:8px;
-  border-radius:12px;
-  background:#159447;
-  color:white;
-  font-size:15px;
-  font-weight:bold;
-  cursor:pointer;
-}
+    <option value="investment">
+      💰 Investment
+    </option>
 
-button:active{
-  transform:scale(.98);
-}
+    <option value="sale">
+      🛒 Sale
+    </option>
 
-.back{
-  background:#777;
-}
+    <option value="expense">
+      💸 Business Expense
+    </option>
 
-.summary{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
+  </select>
 
-.box{
-  background:#f3f8f4;
-  padding:15px;
-  border-radius:15px;
-}
 
-.box small{
-  display:block;
-  color:#77827b;
-  margin-bottom:7px;
-}
+  <input
+    type="number"
+    id="businessAmount"
+    placeholder="Amount (Rs)"
+    min="1"
+  >
 
-.profit{
-  color:#159447;
-}
 
-.loss{
-  color:#e5484d;
-}
+  <input
+    type="date"
+    id="businessDate"
+  >
 
-@media(max-width:450px){
 
-  main{
-    padding:12px;
-  }
+  <input
+    type="text"
+    id="businessNote"
+    placeholder="Note e.g. Shop stock"
+  >
 
-  .summary{
-    grid-template-columns:1fr;
-  }
 
-}
+  <button onclick="saveBusinessTransaction()">
+    💾 Save Business Transaction
+  </button>
 
-</style>
-
-</head>
-
-<body>
-
-<header>
-
-  <h1>🏪 Business Manager</h1>
-
-  <p>Bachat Pro</p>
-
-</header>
-
-
-<main>
-
-
-  <!-- BACK BUTTON -->
-
-  <section class="card">
-
-    <button
-      class="back"
-      onclick="goHome()"
-    >
-      ← Back to Bachat Pro
-    </button>
-
-  </section>
-
-
-  <!-- BUSINESS SUMMARY -->
-
-  <section class="card">
-
-    <h2>📊 Business Summary</h2>
-
-    <div class="summary">
-
-      <div class="box">
-
-        <small>Total Investment</small>
-
-        <strong>
-          Rs 0
-        </strong>
-
-      </div>
-
-
-      <div class="box">
-
-        <small>Total Sales</small>
-
-        <strong>
-          Rs 0
-        </strong>
-
-      </div>
-
-
-      <div class="box">
-
-        <small>Business Expenses</small>
-
-        <strong>
-          Rs 0
-        </strong>
-
-      </div>
-
-
-      <div class="box">
-
-        <small>Profit / Loss</small>
-
-        <strong class="profit">
-          Rs 0
-        </strong>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- COMING NEXT -->
-
-  <section class="card">
-
-    <h2>🚧 Business Manager</h2>
-
-    <p>
-      Yahan hum investment, sales, expenses
-      aur automatic profit/loss calculation
-      add karenge.
-    </p>
-
-  </section>
-
-
-</main>
-
-
-<script>
-
-function goHome(){
-
-  window.location.href = "index.html";
-
-}
-
-</script>
-
-
-</body>
-
-  </html>
+</section>
