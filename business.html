@@ -1,3 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+  name="theme-color"
+  content="#159447"
+>
+
+<title>Bachat Pro - Business Manager</title>
+
+
+<style>
+
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  margin:0;
+  background:#f3f7f4;
+  color:#17231b;
+}
+
+header{
+  background:linear-gradient(135deg,#159447,#087535);
+  color:white;
+  padding:28px 20px;
+  text-align:center;
+}
+
+header h1{
+  margin:0 0 6px;
+  font-size:30px;
+}
+
+header p{
+  margin:0;
+  opacity:.9;
+}
+
+main{
+  max-width:700px;
+  margin:auto;
+  padding:18px;
+}
+
+.card{
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:18px;
+  box-shadow:0 6px 20px rgba(0,0,0,.07);
+}
+
+.card h2{
+  margin-top:0;
+}
+
+input,
+select{
+  width:100%;
+  padding:13px;
+  margin:6px 0;
+  border:1px solid #d9e3dc;
+  border-radius:12px;
+  font-size:15px;
+  background:white;
+}
+
+button{
+  width:100%;
+  border:0;
+  padding:14px;
+  margin-top:8px;
+  border-radius:12px;
+  background:#159447;
+  color:white;
+  font-size:15px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.back{
+  background:#777;
+}
+
+.danger{
+  background:#e5484d;
+}
+
+.sale{
+  color:#159447;
+}
+
+.expense{
+  color:#e5484d;
+}
+
+.investment{
+  color:#2878d4;
+}
+
+
+/* SUMMARY */
+
+.summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.summary-box{
+  background:#f3f8f4;
+  padding:15px;
+  border-radius:15px;
+}
+
+.summary-box small{
+  display:block;
+  color:#77827b;
+  margin-bottom:7px;
+}
+
+.summary-box strong{
+  font-size:19px;
+}
+
+
+/* PROFIT */
+
+.profit-box{
+  margin-top:15px;
+  padding:18px;
+  border-radius:16px;
+  text-align:center;
+  background:#f3f8f4;
+}
+
+.profit-box small{
+  display:block;
+  margin-bottom:7px;
+  color:#77827b;
+}
+
+.profit-box strong{
+  font-size:28px;
+}
+
+
+/* TRANSACTIONS */
+
+.transaction{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:14px 0;
+  border-bottom:1px solid #e8eee9;
+}
+
+.transaction:last-child{
+  border-bottom:0;
+}
+
+.transaction small{
+  display:block;
+  color:#77827b;
+  margin-top:4px;
+}
+
+.transaction-actions{
+  display:flex;
+  gap:5px;
+  margin-top:7px;
+}
+
+.transaction-actions button{
+  width:auto;
+  padding:8px 11px;
+  margin:0;
+}
+
+.empty{
+  text-align:center;
+  color:#7b857f;
+  padding:15px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:450px){
+
+  main{
+    padding:12px;
+  }
+
+  .summary{
+    grid-template-columns:1fr;
+  }
+
+  .transaction{
+    align-items:flex-start;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==============================
+     HEADER
+============================== -->
+
+<header>
+
+  <h1>🏪 Business Manager</h1>
+
+  <p>Bachat Pro • Business Hisab</p>
+
+</header>
+
+
+<main>
+
+
+<!-- ==============================
+     BACK
+============================== -->
+
+<section class="card">
+
+  <button
+    class="back"
+    onclick="goHome()"
+  >
+    ← Back to Bachat Pro
+  </button>
+
+</section>
+
+
+<!-- ==============================
+     BUSINESS SUMMARY
+============================== -->
+
+<section class="card">
+
+  <h2>📊 Business Summary</h2>
+
+  <div class="summary">
+
+
+    <div class="summary-box">
+
+      <small>Total Investment</small>
+
+      <strong
+        class="investment"
+        id="totalInvestment"
+      >
+        Rs 0
+      </strong>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <small>Total Sales</small>
+
+      <strong
+        class="sale"
+        id="totalSales"
+      >
+        Rs 0
+      </strong>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <small>Total Expenses</small>
+
+      <strong
+        class="expense"
+        id="totalExpenses"
+      >
+        Rs 0
+      </strong>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <small>Transactions</small>
+
+      <strong id="totalTransactions">
+        0
+      </strong>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="profit-box">
+
+    <small>Net Profit / Loss</small>
+
+    <strong
+      id="netProfit"
+      class="profit"
+    >
+      Rs 0
+    </strong>
+
+  </div>
+
+</section>
+
+
 <!-- ==============================
      ADD BUSINESS TRANSACTION
 ============================== -->
@@ -5,6 +349,7 @@
 <section class="card">
 
   <h2>➕ Add Business Transaction</h2>
+
 
   <select id="businessType">
 
@@ -44,83 +389,643 @@
   >
 
 
-  <button onclick="saveBusinessTransaction()">
+  <button
+    onclick="saveBusinessTransaction()"
+  >
     💾 Save Business Transaction
   </button>
 
 </section>
 
+
+<!-- ==============================
+     BUSINESS TRANSACTIONS
+============================== -->
+
+<section class="card">
+
+  <h2>📋 Business Transactions</h2>
+
+  <div id="businessTransactionsList">
+
+    <p class="empty">
+      No business transactions yet.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- ==============================
+     BUSINESS RESULT
+============================== -->
+
+<section class="card">
+
+  <h2>📈 Business Result</h2>
+
+  <p>
+    Total Sales:
+    <strong
+      class="sale"
+      id="resultSales"
+    >
+      Rs 0
+    </strong>
+  </p>
+
+
+  <p>
+    Total Expenses:
+    <strong
+      class="expense"
+      id="resultExpenses"
+    >
+      Rs 0
+    </strong>
+  </p>
+
+
+  <p>
+    Net Profit / Loss:
+    <strong id="resultProfit">
+      Rs 0
+    </strong>
+  </p>
+
+</section>
+
+
 </main>
+
 
 <script>
 
-function goHome(){
 
-  window.location.href = "index.html";
-
-}
+// ========================================
+// DATA
+// ========================================
 
 let businessTransactions =
   JSON.parse(
-    localStorage.getItem("bachatBusinessTransactions")
+    localStorage.getItem(
+      "bachatBusinessTransactions"
+    )
   ) || [];
+
+
+// ========================================
+// GO HOME
+// ========================================
+
+function goHome(){
+
+  window.location.href =
+    "index.html";
+
+}
+
+
+// ========================================
+// TODAY DATE
+// ========================================
+
+function setBusinessToday(){
+
+  document.getElementById(
+    "businessDate"
+  ).value =
+    new Date()
+      .toISOString()
+      .split("T")[0];
+
+}
+
+
+// ========================================
+// SAVE BUSINESS TRANSACTION
+// ========================================
 
 function saveBusinessTransaction(){
 
   const type =
-    document.getElementById("businessType").value;
+    document.getElementById(
+      "businessType"
+    ).value;
+
 
   const amount =
     Number(
-      document.getElementById("businessAmount").value
+      document.getElementById(
+        "businessAmount"
+      ).value
     );
 
+
   const date =
-    document.getElementById("businessDate").value;
+    document.getElementById(
+      "businessDate"
+    ).value;
+
 
   const note =
-    document.getElementById("businessNote").value.trim();
+    document.getElementById(
+      "businessNote"
+    ).value
+    .trim();
 
-  if(amount <= 0){
 
-    alert("Please enter amount.");
+  if(
+    !amount ||
+    amount <= 0
+  ){
+
+    alert(
+      "Please enter a valid amount."
+    );
 
     return;
 
   }
+
 
   if(!date){
 
-    alert("Please select date.");
+    alert(
+      "Please select date."
+    );
 
     return;
 
   }
 
+
   businessTransactions.push({
 
-    id: Date.now(),
-    type: type,
-    amount: amount,
-    date: date,
-    note: note
+    id:Date.now(),
+
+    type:type,
+
+    amount:amount,
+
+    date:date,
+
+    note:note
 
   });
 
-  localStorage.setItem(
-    "bachatBusinessTransactions",
-    JSON.stringify(businessTransactions)
+
+  saveBusinessData();
+
+
+  document.getElementById(
+    "businessAmount"
+  ).value = "";
+
+
+  document.getElementById(
+    "businessNote"
+  ).value = "";
+
+
+  alert(
+    "✅ Business transaction saved!"
   );
 
-  document.getElementById("businessAmount").value = "";
 
-  document.getElementById("businessNote").value = "";
-
-  alert("✅ Business transaction saved!");
+  renderBusiness();
 
 }
 
+
+// ========================================
+// SAVE DATA
+// ========================================
+
+function saveBusinessData(){
+
+  localStorage.setItem(
+
+    "bachatBusinessTransactions",
+
+    JSON.stringify(
+      businessTransactions
+    )
+
+  );
+
+}
+
+
+// ========================================
+// DELETE BUSINESS TRANSACTION
+// ========================================
+
+function deleteBusinessTransaction(id){
+
+  if(
+    !confirm(
+      "Delete this business transaction?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  businessTransactions =
+    businessTransactions.filter(
+      function(t){
+
+        return t.id !== id;
+
+      }
+    );
+
+
+  saveBusinessData();
+
+  renderBusiness();
+
+}
+
+
+// ========================================
+// RENDER BUSINESS
+// ========================================
+
+function renderBusiness(){
+
+  let totalInvestment = 0;
+
+  let totalSales = 0;
+
+  let totalExpenses = 0;
+
+
+  businessTransactions.forEach(
+    function(t){
+
+      if(
+        t.type === "investment"
+      ){
+
+        totalInvestment +=
+          t.amount;
+
+      }
+
+
+      if(
+        t.type === "sale"
+      ){
+
+        totalSales +=
+          t.amount;
+
+      }
+
+
+      if(
+        t.type === "expense"
+      ){
+
+        totalExpenses +=
+          t.amount;
+
+      }
+
+    }
+  );
+
+
+  /*
+    Investment is NOT treated as an expense.
+
+    Profit/Loss =
+    Sales - Business Expenses
+  */
+
+  const profit =
+    totalSales -
+    totalExpenses;
+
+
+  // SUMMARY
+
+  document.getElementById(
+    "totalInvestment"
+  ).textContent =
+    "Rs " +
+    totalInvestment.toLocaleString();
+
+
+  document.getElementById(
+    "totalSales"
+  ).textContent =
+    "Rs " +
+    totalSales.toLocaleString();
+
+
+  document.getElementById(
+    "totalExpenses"
+  ).textContent =
+    "Rs " +
+    totalExpenses.toLocaleString();
+
+
+  document.getElementById(
+    "totalTransactions"
+  ).textContent =
+    businessTransactions.length;
+
+
+  const profitElement =
+    document.getElementById(
+      "netProfit"
+    );
+
+
+  profitElement.textContent =
+    "Rs " +
+    Math.abs(
+      profit
+    ).toLocaleString();
+
+
+  if(profit >= 0){
+
+    profitElement.className =
+      "profit";
+
+    profitElement.textContent =
+      "Rs " +
+      profit.toLocaleString();
+
+  }else{
+
+    profitElement.className =
+      "loss";
+
+    profitElement.textContent =
+      "- Rs " +
+      Math.abs(
+        profit
+      ).toLocaleString();
+
+  }
+
+
+  // RESULT
+
+  document.getElementById(
+    "resultSales"
+  ).textContent =
+    "Rs " +
+    totalSales.toLocaleString();
+
+
+  document.getElementById(
+    "resultExpenses"
+  ).textContent =
+    "Rs " +
+    totalExpenses.toLocaleString();
+
+
+  const resultProfit =
+    document.getElementById(
+      "resultProfit"
+    );
+
+
+  if(profit >= 0){
+
+    resultProfit.className =
+      "profit";
+
+    resultProfit.textContent =
+      "Rs " +
+      profit.toLocaleString();
+
+  }else{
+
+    resultProfit.className =
+      "loss";
+
+    resultProfit.textContent =
+      "- Rs " +
+      Math.abs(
+        profit
+      ).toLocaleString();
+
+  }
+
+
+  renderBusinessTransactions();
+
+}
+
+
+// ========================================
+// RENDER TRANSACTIONS
+// ========================================
+
+function renderBusinessTransactions(){
+
+  const box =
+    document.getElementById(
+      "businessTransactionsList"
+    );
+
+
+  if(
+    businessTransactions.length === 0
+  ){
+
+    box.innerHTML =
+      '<p class="empty">No business transactions yet.</p>';
+
+    return;
+
+  }
+
+
+  box.innerHTML = "";
+
+
+  businessTransactions
+    .slice()
+    .sort(
+      function(a,b){
+
+        return b.id - a.id;
+
+      }
+    )
+    .forEach(
+      function(t){
+
+        const div =
+          document.createElement(
+            "div"
+          );
+
+
+        div.className =
+          "transaction";
+
+
+        let typeName = "";
+
+        let typeClass = "";
+
+        let sign = "";
+
+
+        if(
+          t.type === "investment"
+        ){
+
+          typeName =
+            "💰 Investment";
+
+          typeClass =
+            "investment";
+
+          sign = "";
+
+        }
+
+
+        if(
+          t.type === "sale"
+        ){
+
+          typeName =
+            "🛒 Sale";
+
+          typeClass =
+            "sale";
+
+          sign = "+";
+
+        }
+
+
+        if(
+          t.type === "expense"
+        ){
+
+          typeName =
+            "💸 Business Expense";
+
+          typeClass =
+            "expense";
+
+          sign = "-";
+
+        }
+
+
+        div.innerHTML = `
+
+          <div>
+
+            <strong
+              class="${typeClass}"
+            >
+              ${typeName}
+            </strong>
+
+            <small>
+
+              ${escapeHTML(t.date)}
+
+              ${
+                t.note
+                ?
+                " • " +
+                escapeHTML(t.note)
+                :
+                ""
+              }
+
+            </small>
+
+          </div>
+
+
+          <div>
+
+            <strong
+              class="${typeClass}"
+            >
+
+              ${sign}
+              Rs ${t.amount.toLocaleString()}
+
+            </strong>
+
+
+            <div
+              class="transaction-actions"
+            >
+
+              <button
+                class="danger"
+                onclick="deleteBusinessTransaction(${t.id})"
+              >
+                🗑️
+              </button>
+
+            </div>
+
+          </div>
+
+        `;
+
+
+        box.appendChild(div);
+
+      }
+    );
+
+}
+
+
+// ========================================
+// SECURITY
+// ========================================
+
+function escapeHTML(text){
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+  div.textContent =
+    text;
+
+  return div.innerHTML;
+
+}
+
+
+// ========================================
+// START BUSINESS APP
+// ========================================
+
+setBusinessToday();
+
+renderBusiness();
+
+
 </script>
 
+
 </body>
+
 </html>
